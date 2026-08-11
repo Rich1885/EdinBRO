@@ -1,0 +1,9 @@
+# helyi Claude Code beállítások — ne kerüljön ki a netre
+.claude/
+
+# a régi sötét téma mentése (helyben megmarad, de ne legyen publikus)
+index-sotet-backup.html
+
+# ideiglenes teszt fájlok
+_t*.html
+_p*.html

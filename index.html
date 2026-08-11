@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1b34">
+<title>EDINBRO — Belfast 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<style>
+:root{
+  --red:#9E1B27;          /* válogatott mez mélyvörös */
+  --red2:#C8102E;         /* élénk piros */
+  --red-dk:#7A1420;
+  --green:#2C7A4B;
+  --gold:#C9A227;
+  --bg:#EFF1F5;
+  --card:#FFFFFF;
+  --ink:#171A21;
+  --dim:#6B7280;
+  --line:#E2E5EC;         /* halvány: kártyán BELÜLI elválasztók */
+  --edge:rgba(43,50,67,.42);   /* a dobozok külső kerete — látható, de nem kemény */
+  --r:20px;
+  --sh:0 1px 2px rgba(20,24,35,.05),0 10px 28px rgba(20,24,35,.09);
+  --sh-h:0 2px 6px rgba(20,24,35,.07),0 18px 44px rgba(20,24,35,.14);
+  --sp:8px;                    /* 8px-es alap ritmus */
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  padding-bottom:60px;overflow-x:hidden}
+a{color:var(--red2)}
+h1,h2,h3{margin:0 0 .4em;line-height:1.2}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+
+/* ============ FEJLÉC: piros sáv, egy sorban ============ */
+.topbar{background:linear-gradient(100deg,var(--red-dk),var(--red) 55%,#B3202C);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.logoimg{height:38px;width:auto;display:block;flex:0 0 auto;
+  filter:drop-shadow(0 2px 5px rgba(0,0,0,.35))}
+.logo{font-size:23px;font-weight:900;letter-spacing:.5px;white-space:nowrap}
+.logo span{color:#0B0D11}
+.chip{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.hdr-sp{flex:1}
+/* kompakt visszaszámláló — egy dobozban, jobbra */
+.cd{display:flex;align-items:center;gap:9px;background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:6px 11px}
+.cd .lb{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;opacity:.75;
+  line-height:1.15;text-align:right;font-weight:700}
+.cd .nums{display:flex;gap:7px;font-variant-numeric:tabular-nums}
+.cd .nums i{font-style:normal;text-align:center;line-height:1}
+.cd .nums b{display:block;font-size:19px;font-weight:800}
+.cd .nums u{display:block;font-size:8.5px;text-decoration:none;opacity:.7;letter-spacing:.5px}
+
+/* ============ MENÜ: fehér sor ============ */
+nav{background:#fff;border-bottom:1px solid var(--line);
+  box-shadow:0 1px 6px rgba(20,24,35,.05)}
+nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;background:none;border:0;color:#4A5160;cursor:pointer;
+  font:700 14px/1 inherit;padding:15px 14px;border-bottom:3px solid transparent;white-space:nowrap}
+nav button:hover{color:var(--red)}
+nav button.on{color:var(--red);border-bottom-color:var(--red)}
+
+/* következő esemény — vékony csík a menü alatt */
+.nextbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--edge);
+  border-left:4px solid var(--gold);border-radius:10px;padding:9px 13px;margin:14px 0 0;
+  cursor:pointer;box-shadow:var(--sh)}
+.nextbar .pulse{width:8px;height:8px;border-radius:99px;background:var(--gold);flex:0 0 auto;
+  animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.5)}}
+.nextbar .txt{flex:1;min-width:0;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.nextbar .lab{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);font-weight:800}
+.nextbar .val{font-weight:700;font-size:14.5px}
+.nextbar .when{font-size:12.5px;color:var(--dim)}
+.nextbar .arr{color:var(--dim);font-size:19px}
+
+section{display:none;padding:24px 0 48px;animation:fade .25s ease}
+section.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.card{background:var(--card);border:1px solid var(--edge);border-radius:var(--r);
+  padding:24px;margin:0 0 20px;box-shadow:var(--sh)}
+.card h3{font-size:11.5px;color:var(--red);text-transform:uppercase;letter-spacing:1.1px;
+  font-weight:800;margin-bottom:14px}
+.muted{color:var(--dim);font-size:13.5px;line-height:1.6}
+.tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.4px;padding:3px 9px;
+  border-radius:99px;background:#EEF0F5;color:#5A6173}
+.tag.fix{background:#E4F4EC;color:#1E6B42}
+.tag.todo{background:#FCE8EA;color:#A0192A}
+.tag.opt{background:#FDF3DC;color:#8A6B10}
+
+/* ============ MECCS SOR (Újpest-stílus) ============ */
+.fx{display:grid;grid-template-columns:minmax(240px,1fr) 1.25fr;background:#fff;
+  border:1px solid var(--edge);border-radius:var(--r);overflow:hidden;margin:0 0 14px;box-shadow:var(--sh)}
+.fx-l{background:linear-gradient(120deg,var(--red-dk),var(--red) 60%,#B3202C);color:#fff;
+  padding:22px 16px;display:flex;align-items:center;justify-content:center;gap:14px;position:relative}
+.fx-l::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 20% 0%,rgba(255,255,255,.16),transparent 60%)}
+.fx-team{text-align:center;position:relative;z-index:1;width:96px}
+.fx-team .crest{width:56px;height:56px;border-radius:99px;background:#fff;padding:4px;
+  margin:0 auto 8px;box-shadow:0 3px 10px rgba(0,0,0,.3);overflow:hidden;display:block}
+.fx-team .crest svg,.fx-team .crest img{width:100%;height:100%;border-radius:99px;display:block;object-fit:contain}
+.fx-team .nm{font-size:12.5px;font-weight:800;line-height:1.25}
+.fx-team .fifa{font-size:10px;opacity:.75;margin-top:1px}
+.fx-vs{font-size:13px;font-weight:800;opacity:.65;position:relative;z-index:1}
+.fx-r{padding:16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.fx-date{background:var(--red);color:#fff;border-radius:10px;text-align:center;
+  padding:8px 4px;width:72px;flex:0 0 auto}
+.fx-date b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.8px}
+.fx-date i{display:block;font-style:normal;font-size:25px;font-weight:900;line-height:1.05}
+.fx-info{flex:1;min-width:180px}
+.fx-time{font-size:23px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
+.fx-venue{font-size:14px;color:#3D4353;font-weight:600}
+.fx-meta{margin-top:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.watch{font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.4px}
+.watch.live{background:var(--red2);color:#fff}
+.watch.tv{background:#EEF0F5;color:#5A6173}
+.fx-cd{font-size:12.5px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
+.fx-note{width:100%;font-size:13px;color:var(--dim);border-top:1px dashed var(--line);padding-top:10px;margin-top:2px}
+@media(max-width:700px){.fx{grid-template-columns:1fr}}
+
+/* ============ HÍR RÁCS (Újpest-stílus) ============ */
+.news{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.hir{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--edge);
+  border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);transition:transform .18s,box-shadow .18s}
+.hir:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(20,24,35,.13)}
+.hir .th{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#DCE0E8}
+.hir .bd{padding:12px 13px 15px}
+.hir .hd{font-size:11.5px;color:var(--dim);font-weight:700}
+.hir .hc{font-size:14.5px;font-weight:800;line-height:1.3;margin-top:5px}
+.hir:hover .hc{color:var(--red)}
+/* ---- Áttekintés főkártya ---- */
+.hero{background:linear-gradient(125deg,var(--red-dk),var(--red) 58%,#B3202C);color:#fff;
+  border-radius:var(--r);padding:26px;margin:0 0 20px;box-shadow:var(--sh);
+  display:flex;gap:24px;flex-wrap:wrap;align-items:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 12% 0%,rgba(255,255,255,.18),transparent 62%)}
+.hero>*{position:relative;z-index:1}
+.hero-l{flex:1 1 300px;min-width:0}
+.hero-t{font-size:30px;font-weight:900;letter-spacing:.4px;line-height:1.1}
+.hero-s{font-size:14px;opacity:.85;margin-top:5px}
+.hero-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.hero-chips span{background:rgba(0,0,0,.20);border:1px solid rgba(255,255,255,.16);
+  border-radius:99px;padding:6px 13px;font-size:12.5px;font-weight:500}
+.hero-chips b{font-weight:800;font-size:14px}
+.hero-r{flex:0 0 auto;display:flex;gap:12px;flex-wrap:wrap}
+.hero-k{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.16);
+  border-radius:14px;padding:13px 16px;min-width:150px}
+.hero-k span{display:block;font-size:10px;letter-spacing:1.1px;text-transform:uppercase;opacity:.75;font-weight:700}
+.hero-k b{display:block;font-size:19px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums}
+.hero-k b.sm{font-size:14.5px;font-weight:700;line-height:1.3}
+
+/* ---- Költségek: nagy összegzés a táblázat fölé ---- */
+.sumgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:22px}
+.sumbox{background:#F7F8FC;border:1px solid var(--line);border-radius:14px;padding:16px}
+.sumbox span{display:block;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--dim);font-weight:800}
+.sumbox b{display:block;font-size:24px;font-weight:900;margin-top:5px;font-variant-numeric:tabular-nums}
+.sumbox.f b{color:var(--red)}
+.sumbox.j b{color:var(--green)}
+.sumbox.h b{color:var(--warning,#C2410C)}
+
+/* beágyazott térkép a szálláskártyákon */
+.mapbox{margin-top:12px}
+.mapbox iframe{width:100%;height:320px;border:1px solid var(--edge);border-radius:10px;display:block}
+.mapbox .betolt{font-size:12.5px;color:var(--dim);padding:10px 0}
+
+/* útvonaltérkép kép (Airlink) — sötét hátterű, ezért kap keretet */
+.routemap{width:100%;height:auto;display:block;border-radius:10px;
+  border:1px solid var(--edge);background:#0d1b34}
+.rf{background:#fff;border:1px solid var(--line);color:var(--ink);width:34px;height:34px;
+  border-radius:9px;font-size:16px;cursor:pointer;flex:0 0 auto}
+.rf:hover{background:#F5F6FA;color:var(--red)}
+.rf.spin{animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ============ IDŐVONAL ============ */
+.filters{display:flex;gap:7px;margin:0 0 16px;flex-wrap:wrap}
+.filters button{background:#fff;border:1px solid var(--line);color:#4A5160;
+  font:700 12.5px/1 inherit;padding:9px 14px;border-radius:99px;cursor:pointer;box-shadow:var(--sh)}
+.filters button.on{background:var(--red);color:#fff;border-color:var(--red)}
+.day{margin:0 0 24px}
+.day>h2{font-size:18px;display:inline-flex;align-items:baseline;gap:8px;flex-wrap:wrap;
+  background:var(--bg);padding:3px 12px 3px 0;border-radius:8px}
+.day>h2 small{color:var(--dim);font-weight:400;font-size:13px}
+.tl{border-left:2px solid #C3CAD8;margin-left:9px;padding-left:24px}
+/* Minden esemény önálló FEHÉR doboz — enélkül a mögötte futó
+   játékos-fotón olvashatatlan volt a szöveg. */
+.ev{position:relative;padding:13px 16px;background:#fff;border:1px solid var(--edge);
+  border-radius:12px;margin:0 0 10px;box-shadow:var(--sh)}
+.ev.hide{display:none}
+.ev::before{content:"";position:absolute;left:-31px;top:20px;width:12px;height:12px;
+  border-radius:99px;background:var(--gold);border:2px solid var(--bg)}
+.ev.plane::before{background:var(--red2)}
+.ev.bus::before{background:var(--green)}
+.ev.walk::before{background:#3E6DD1}
+.ev.star::before{background:var(--red);width:16px;height:16px;left:-33px;
+  box-shadow:0 0 0 4px rgba(158,27,39,.18)}
+.ev.next{border-color:var(--gold);box-shadow:inset 0 0 0 2px rgba(201,162,39,.45),var(--sh)}
+.ev{padding:18px 20px;margin:0 0 12px}
+.ev .t{display:inline-block;font-weight:800;font-size:14.5px;font-variant-numeric:tabular-nums;
+  color:var(--red);background:#FCEFF1;padding:4px 11px;border-radius:9px;margin-bottom:5px}
+.ev .n{font-weight:700}
+.ev .d{color:#4A5160;font-size:13.5px;margin-top:3px}
+.ev .price{float:right;font-weight:800;color:var(--green);font-size:14px}
+.lnks{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+.lnks a{font-size:12px;font-weight:700;text-decoration:none;background:#fff;
+  border:1px solid var(--line);color:#3D4353;padding:6px 11px;border-radius:8px}
+.lnks a:hover{border-color:var(--red);color:var(--red)}
+
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:15px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--dim)}
+td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+tfoot td{border:0;padding-top:13px;font-size:16px;font-weight:900}
+.ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.ctrl label{font-size:13px;color:var(--dim)}
+input[type=number],input[type=text]{background:#fff;border:1px solid var(--line);color:var(--ink);
+  border-radius:8px;padding:8px 10px;font:600 15px inherit}
+input[type=number]{width:80px}
+input[type=text]{width:118px}
+.big{font-size:32px;font-weight:900;color:var(--red);line-height:1.1}
+
+.bar{height:9px;background:#E2E5EC;border-radius:99px;overflow:hidden;margin:7px 0 16px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#54B583);
+  border-radius:99px;transition:width .4s ease}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.chk:last-child{border:0}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:var(--green);flex:0 0 auto}
+.chk.done .lbl{text-decoration:line-through;opacity:.42}
+.chk .lbl{flex:1;min-width:0}
+.chk .lbl b{display:block}
+.chk .lbl span{font-size:13px;color:var(--dim)}
+.eta{flex:0 0 auto;text-align:right;line-height:1.25;padding-left:8px}
+.eta b{display:block;font-size:13px;font-weight:900;color:var(--dim);white-space:nowrap}
+.eta span{font-size:11px;color:var(--dim);opacity:.75;white-space:nowrap}
+.eta.soon b{color:#B07A0A}
+.eta.late b{color:var(--red2)}
+.chk.done .eta{opacity:.35}
+
+/* 280px minimum => 1040px-es tartalomnál 3 oszlop, így a 6 útkártya 3+3 (nincs árva sor) */
+.grid2{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.kv:last-child{border:0}
+.kv span{color:var(--dim);font-weight:500}
+.kv b{font-variant-numeric:tabular-nums;text-align:right;font-weight:600}
+.btn{display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:14px;
+  padding:10px 15px;border-radius:9px;text-decoration:none;border:0;cursor:pointer;margin:5px 6px 0 0}
+.btn:hover{background:var(--red-dk)}
+.btn.ghost{background:#fff;color:var(--red);border:1px solid var(--line)}
+.btn.ghost:hover{background:#F5F6FA;border-color:var(--red)}
+.warn{background:#FFF4F5;border:1px solid var(--edge);border-left:4px solid var(--red2);
+  border-radius:var(--r);padding:16px;margin:0 0 14px;box-shadow:var(--sh)}
+.warn h3{color:var(--red2)}
+footer{color:var(--dim);font-size:12px;text-align:center;padding:26px 0 30px}
+
+/* ---- mikrointerakciók ---- */
+.card,.fx,.hir,.ev{transition:transform .18s ease,box-shadow .18s ease}
+.hir:hover,.fx:hover{transform:translateY(-2px);box-shadow:var(--sh-h)}
+.btn{transition:transform .12s ease,background .15s ease,border-color .15s ease}
+.btn:active{transform:scale(.97)}
+.filters button,.rf,nav button{transition:transform .12s ease,background .15s ease,color .15s ease}
+.filters button:active,.rf:active{transform:scale(.96)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.pay{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.bal{font-weight:900;font-variant-numeric:tabular-nums;margin-left:auto}
+.bal.pos{color:var(--green)}.bal.neg{color:var(--red2)}
+
+/* ============ FIX OLDALSÓ JÁTÉKOSOK ============ */
+/* ============================================================
+   SZOBOSZLAI + SCHÄFER — fix oldalsó sávok.
+   A kártyák MÖGÖTT ülnek (z-index:0), így nagy alakot
+   mutathatnak anélkül, hogy bármit takarnának.
+   A szélességük az ablakkal együtt nő (clamp), tehát 1250px-től
+   fölfelé minden laptop/monitor méreten rendesen látszanak.
+   1250px alatt (tablet, telefon) rejtve — ott nincs oldalsó hely.
+   ============================================================ */
+.rail{display:none;position:fixed;bottom:40px;z-index:0;pointer-events:none;user-select:none;
+  width:clamp(190px,calc((100vw - 900px)/2),400px)}
+.rail img{width:100%;height:auto;display:block;
+  filter:drop-shadow(0 14px 34px rgba(20,24,35,.28))}
+.rail-l{left:-24px}
+.rail-r{right:-24px}
+@media(min-width:1250px){.rail{display:block}}
+/* a tartalom mindig a játékosok fölött */
+/* a tartalom mindig a játékosok fölött */
+main.wrap,footer,.wrap{position:relative;z-index:1}
+/* a piros sáv + menü együtt tapad a képernyő tetejére görgetéskor */
+.hdrwrap{position:sticky;top:0;z-index:30;box-shadow:0 6px 20px rgba(20,24,35,.16)}
+
+/* --- keskeny képernyő: a fejléc ne lógjon ki --- */
+@media(max-width:620px){
+  .topbar .wrap{height:auto;min-height:60px;flex-wrap:wrap;padding-top:9px;padding-bottom:9px;gap:8px}
+  .logoimg{height:28px}
+  .logo{font-size:20px}
+  .chip{font-size:10px;padding:3px 8px}
+  .hdr-sp{flex:1}
+  .cd{padding:5px 9px;gap:7px}
+  .cd .lb{display:none}
+  .cd .nums b{font-size:16px}
+  .cd .nums u{font-size:8px}
+  nav button{padding:13px 11px;font-size:13.5px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     ADAT — MINDENT ITT KELL SZERKESZTENI
+     ============================================================ -->
+<script>
+const ADAT = {
+
+  // ---- MECCSEK ---------------------------------------------
+  meccsek: [
+    { datum:"2026-09-25", ido:"19:45", sorozat:"Válogatott",
+      hazai:"Magyarország", hazaiFifa:39, hazaiZ:"hu",
+      vendeg:"Ukrajna",     vendegFifa:33, vendegZ:"ua",
+      hol:"Budapest", nezes:"tv",
+      megj:"Ezt Edinburgh-ben nézzük együtt, kivetítőn. Keressünk hozzá egy jó pubot a Royal Mile / Grassmarket környékén.",
+      link:"https://www.google.com/search?q=Magyarorsz%C3%A1g+Ukrajna+2026.09.25" },
+
+    { datum:"2026-09-28", ido:"19:45", sorozat:"Válogatott",
+      hazai:"Észak-Írország", hazaiFifa:70, hazaiZ:"ni",
+      vendeg:"Magyarország",  vendegFifa:39, vendegZ:"hu",
+      hol:"Windsor Park, Belfast", nezes:"live",
+      megj:"EZÉRT MEGYÜNK. A szállásunk a stadion mellett van — gyalog átsétálunk.",
+      link:"https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast" }
+  ],
+  foMeccs: 1,   // melyik meccsre számoljon vissza a fejléc (0-tól)
+
+  // ---- HÍREK (Meccsek fül) ----------------------------------
+  hirek: {
+    darab: 6,          // 3 oszlopos rácshoz 6 néz ki a legjobban
+    // A Nemzeti Sport "Magyar válogatott" rovatoldala — valódi cikkek, valódi dátumok.
+    // (Google Hírek helyett, mert az régi cikkeknek is friss dátumot adott.)
+    forras:"https://www.nemzetisport.hu/rovat/magyar-valogatott",
+    rovat:"https://www.nemzetisport.hu/rovat/magyar-valogatott"
+  },
+
+  // ---- UTAK (Áttekintés kártyák) — mind ugyanaz a szerkezet ----
+  utak: [
+    { cim:"ODA · Perth → Edinburgh", datum:"szept. 24.", ki:"MrMcSeki",
+      jarat:"Ember busz", ind:"15:39 · Perth Railway Station",
+      erk:"17:16 · Edinburgh, George St (GM)", ido:"1h 37m", ar:"£7.45",
+      megj:"Min. 10 perccel indulás előtt foglalni kell, különben nem áll meg Perthben." },
+
+    { cim:"ODA · Budapest → Edinburgh", datum:"szept. 24–25.", ki:"EdinBRO",
+      jarat:"FR 1018 · Ryanair", ind:"21:55 · Budapest (BUD)",
+      erk:"00:00 · Edinburgh (EDI)", ido:"3h 05m", ar:"fix, megvan",
+      megj:"Éjfélkor landolnak. Airlink 100, Stop A — eléjük megyek." },
+
+    { cim:"ÁTKELÉS · Edinburgh → Belfast", datum:"szept. 26.", ki:"mind",
+      jarat:"RK 179 · Ryanair UK", ind:"15:40 · Edinburgh (EDI)",
+      erk:"16:30 · Belfast International (BFS)", ido:"0h 50m", ar:"£14.99 / fő",
+      megj:"Onnan Airport Express 300 + séta a szállásig." },
+
+    { cim:"VISSZA · Belfast → Edinburgh", datum:"szept. 29.", ki:"mind",
+      jarat:"easyJet", ind:"11:55 · Belfast International (BFS)",
+      erk:"12:50 · Edinburgh (EDI)", ido:"0h 55m", ar:"£14.49 / fő",
+      megj:"Akciós ár. A 08:55-ös £16.99 lett volna — ez olcsóbb ÉS később megy." },
+
+    { cim:"HAZA · Edinburgh → Budapest", datum:"szept. 29.", ki:"EdinBRO",
+      jarat:"FR 1077 · Ryanair Sun", ind:"19:50 · Edinburgh (EDI)",
+      erk:"23:40 · Budapest (BUD)", ido:"2h 50m", ar:"fix, megvan",
+      megj:"Ugyanaz a reptér, 7 óra ráhagyás a becsatlakozásra." },
+
+    { cim:"HAZA · Edinburgh → Perth", datum:"szept. 29.", ki:"MrMcSeki",
+      jarat:"Ember busz", ind:"18:16 · Edinburgh Airport, Stop E",
+      erk:"19:17 · Perth Railway Station", ido:"1h 01m", ar:"£7.55",
+      megj:"Közvetlen a reptérről. 17:50-kor kikísérem őket, 18:16-kor indulok." }
+  ],
+
+  // ---- SZÁLLÁSOK -------------------------------------------
+  szallasok: [
+    { varos:"Edinburgh", nev:"Entire flat in Abbeyhill (A9)",
+      tipus:"Egész lakás · Abbeyhill, EH7", hazigazda:"Anatolii · 10 éve ad ki",
+      ertekeles:"4.47 ★ (142 értékelés)", be:"2026-09-24", ki:"2026-09-26", ejszaka:2,
+      fero:"4 fő · 1 hálószoba · franciaágy + kihúzható kanapé · 1 fürdő",
+      ar:435.80, arMasik:"Visszatéríthető verzió: £471.00",
+      link:"https://www.airbnb.co.uk/rooms/1195473316521984246?adults=4&check_in=2026-09-24&check_out=2026-09-26",
+      terkep:"https://www.google.com/maps/search/Abbeyhill+Edinburgh+EH7",
+      terkepQ:"Abbeyhill, Edinburgh EH7, United Kingdom",
+      plusz:["Self check-in kulcsszéffel — éjjel is jó","Konyha, mosógép, mosogatógép","Séta a St James Quarterhez és a belvárosba","Arthur's Seat / Holyrood a szomszédban"],
+      minusz:["Airbnb szerint az alsó 10%-ban van értékelés alapján","Tisztaság 4.4 ★ — a leggyengébb pontszáma","1 fürdő négy főre, reggel sorbanállás"] },
+
+    { varos:"Belfast", nev:"Traditional Belfast Terrace by Windsor Park",
+      tipus:"Egész ház · Dél-Belfast", hazigazda:"William · Superhost · 9 éve ad ki",
+      ertekeles:"4.71 ★ (7 értékelés)", be:"2026-09-26", ki:"2026-09-29", ejszaka:3,
+      fero:"4 fő · 2 hálószoba · 2 ágy · 1 fürdő",
+      ar:380.00, arMasik:"Listaár £525 volt — most £380",
+      link:"https://www.airbnb.co.uk/rooms/1663915193317863027?adults=4&check_in=2026-09-26&check_out=2026-09-29",
+      terkep:"https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast",
+      terkepQ:"National Football Stadium at Windsor Park, Belfast",
+      plusz:["A Windsor Park stadion MELLETT — gyalog a meccsre 🔥","Superhost házigazda","2 külön hálószoba (jobb, mint Ediben)","Ingyenes lemondás aug. 27-ig"],
+      minusz:["Csak 7 értékelés — új hirdetés","Location 4.3 ★ (Dél-Belfast, nem belváros)","Belváros 2,7 km / ~32 perc séta"] }
+  ],
+
+  // ---- NAPOK ÉS ESEMÉNYEK ----------------------------------
+  // tipus: bus | plane | walk | star | info ; statusz: fix | todo | opt
+  napok: [
+    { datum:"2026-09-24", cim:"1. nap — Megérkezem Edinburgh-be", esemenyek:[
+      { ido:"15:39", tipus:"bus", statusz:"fix", nev:"Perth → Edinburgh (Citylink)",
+        leiras:"Perth Railway Station (Southbound) → Edinburgh, George Street (Stop GM). 1h 37m.<br><em>Legalább 10 perccel indulás előtt le kell foglalni, különben nem áll meg!</em>",
+        ar:7.45, kinek:"en",
+        linkek:[["Citylink foglalás","https://www.citylink.co.uk/"],["Perth állomás 🗺","https://www.google.com/maps/search/Perth+Railway+Station+Scotland"]] },
+
+      { ido:"17:16", tipus:"walk", statusz:"fix", nev:"Megérkezés — George Street (Stop GM)",
+        leiras:"Innen kb. 15 perc séta kelet felé az Abbeyhill-i lakásig.",
+        linkek:[["George Street 🗺","https://www.google.com/maps/search/George+Street+Edinburgh"]] },
+
+      { ido:"17:45", tipus:"info", statusz:"fix", nev:"🔑 Check-in — Abbeyhill (A9)",
+        leiras:"Self check-in kulcsszéffel, nem kell senkivel találkozni. <b>TODO: kód + pontos cím a foglalás után.</b>",
+        linkek:[["Airbnb hirdetés","https://www.airbnb.co.uk/rooms/1195473316521984246?adults=4&check_in=2026-09-24&check_out=2026-09-26"]] },
+
+      { ido:"21:55", tipus:"plane", statusz:"fix", nev:"FR 1018 — Budapest felszáll",
+        leiras:"Ryanair, 3h 05m. Az EdinBRO csapat elindul.",
+        linkek:[["Járatkövetés","https://www.flightradar24.com/data/flights/fr1018"]] },
+
+      { ido:"23:15", tipus:"bus", statusz:"todo", nev:"Én: Waverley Bridge → Repülőtér",
+        leiras:"Airlink 100. Waverley Bridge-ről 00:20-ig 10 percenként megy, ~30 perc az út. Indulj 23:15 körül, hogy éjfélre kint legyél.",
+        linkek:[["Airlink info","https://www.lothianbuses.com/our-services/airport-buses/"],["Waverley Bridge 🗺","https://www.google.com/maps/search/Waverley+Bridge+Edinburgh"]] }
+    ]},
+
+    { datum:"2026-09-25", cim:"2. nap — Ők megjönnek + MECCS a tévében", esemenyek:[
+      { ido:"00:00", tipus:"star", statusz:"fix", nev:"✈️ Landolás — Edinburgh Airport",
+        leiras:"Találkozó az érkezőnél. Airlink megálló: <b>Stop A</b>, az International 2 &amp; UK Domestic Arrivals kijáratnál, a Multi Storey Car Park előtt.",
+        linkek:[["Reptér 🗺","https://www.google.com/maps/search/Edinburgh+Airport+Airlink+Stop+A"]] },
+
+      { ido:"00:35", tipus:"bus", statusz:"todo", nev:"Airlink 100 → Princes St / Hanover St",
+        leiras:"Stop A-ról. 01:00-ig 10 percenként, utána 20 percenként (01:15–04:00). <b>Ne a Waverley Bridge-ig menj</b> — a Princes St / Hanover St megálló van közelebb a St Andrew Square-hez és az Abbeyhillhez.",
+        ar:8.50, kinek:"mind",
+        linkek:[["Airlink jegy","https://www.lothianbuses.com/our-services/airport-buses/"]] },
+
+      { ido:"01:15", tipus:"walk", statusz:"todo", nev:"Séta haza — Abbeyhill",
+        leiras:"Hanover St → St Andrew Square (Meki) → Leith St / London Rd → Abbeyhill. Kb. 15–20 perc.",
+        linkek:[["Útvonal 🗺","https://www.google.com/maps/dir/Hanover+Street+Edinburgh/Abbeyhill+Edinburgh"]] },
+
+      { ido:"13:00", tipus:"info", statusz:"opt", nev:"Szabad délután Edinburgh-ben",
+        leiras:"A szállás közeléből: <b>Arthur's Seat</b> (10 perc gyalog, ingyen, brutál kilátás) · <b>Holyrood Palace</b> · <b>Royal Mile</b> · <b>Edinburgh Castle</b> (~£20) · <b>St James Quarter</b>.",
+        linkek:[["Arthur's Seat 🗺","https://www.google.com/maps/search/Arthur%27s+Seat+Edinburgh"],["Royal Mile 🗺","https://www.google.com/maps/search/Royal+Mile+Edinburgh"]] },
+
+      { ido:"19:00", tipus:"star", statusz:"fix", nev:"🍺 Pubot foglalni a meccsre",
+        leiras:"A <b>Magyarország – Ukrajna</b> 19:45-kor kezdődik. Keressünk egy sportpubot kivetítővel — a Grassmarket és a Royal Mile környéke tele van velük. Meccsnapon érdemes előre asztalt kérni.",
+        linkek:[["Sportpubok 🗺","https://www.google.com/maps/search/sports+bar+Edinburgh+Grassmarket"]] },
+
+      { ido:"19:45", tipus:"star", statusz:"fix", nev:"🇭🇺 MAGYARORSZÁG – UKRAJNA 🇺🇦",
+        leiras:"Első közös meccsnézés, tévéből. Három nappal később már a lelátón lesztek." }
+    ]},
+
+    { datum:"2026-09-26", cim:"3. nap — Átkelés Belfastba", esemenyek:[
+      { ido:"10:00", tipus:"info", statusz:"fix", nev:"Check-out — Abbeyhill",
+        leiras:"TODO: pontos check-out idő a foglalásból." },
+
+      { ido:"13:00", tipus:"bus", statusz:"todo", nev:"Waverley Bridge → Repülőtér (Airlink 100)",
+        leiras:"~30 perc az út. 13:00-kor indulva ~13:35-re kint vagyunk, 2 óra a felszállásig — hátizsákkal bőven elég.",
+        ar:6.00, kinek:"mind" },
+
+      { ido:"15:40", tipus:"plane", statusz:"todo", nev:"RK 179 — Edinburgh → Belfast International",
+        leiras:"Ryanair UK, 0h 50m, érkezés 16:30. <b>£14.99 / fő.</b><br>A két repjegy oda-vissza £29.48/fő — ez az út legjobb vétele.",
+        ar:14.99, kinek:"mind",
+        linkek:[["Ryanair","https://www.ryanair.com/"],["Járat","https://www.flightradar24.com/data/flights/rk179"]] },
+
+      { ido:"17:00", tipus:"bus", statusz:"todo", nev:"Belfast Intl → Grand Central Station",
+        leiras:"<b>Airport Express 300</b>, végig a <b>végállomásig</b> (~35–40 perc, 15 percenként).<br>A köztes belfasti megállók (North Street, Ulster University) a városközponttól <b>északra</b> vannak — nekünk rossz irány, maradunk a buszon.<br>Retúrjegy <b>£13.50/fő</b>.",
+        ar:13.50, kinek:"mind",
+        linkek:[["Translink 300","https://www.translink.co.uk/services/airport-services"],["Menetrend","https://bustimes.org/services/300-belfast-europa-buscentre-international-airport"]] },
+
+      { ido:"17:45", tipus:"walk", statusz:"todo", nev:"Grand Central → szállás",
+        leiras:"<b>A) Vonattal (ajánlott):</b> a Grand Central egyben vasútállomás is, szóval csak peront váltunk. Lisburn felé induló vonat → <b>Adelaide</b> megálló (~5 perc), onnan <b>kb. 500 m / 7 perc séta</b> a stadionhoz a gyalogos hídon át.<br><b>B) Gyalog végig:</b> ~2,2 km / ~28 perc a Great Victoria St → Bradbury Place → Lisburn Road vonalon.<br><em>Csomaggal és meccs előtti napon az A) a nyerő.</em>",
+        linkek:[["Vonatinfó","https://www.translink.co.uk/"],["Adelaide → stadion 🗺","https://www.google.com/maps/dir/Adelaide+railway+station+Belfast/National+Football+Stadium+Windsor+Park"],["Séta végig 🗺","https://www.google.com/maps/dir/Grand+Central+Station+Belfast/National+Football+Stadium+Windsor+Park"]] },
+
+      { ido:"18:30", tipus:"info", statusz:"fix", nev:"🔑 Check-in — Windsor Park terrace",
+        leiras:"2 hálószoba, 2 ágy. <b>TODO: pontos cím + kulcsátvétel Williamtől.</b>",
+        linkek:[["Airbnb hirdetés","https://www.airbnb.co.uk/rooms/1663915193317863027?adults=4&check_in=2026-09-26&check_out=2026-09-29"]] }
+    ]},
+
+    { datum:"2026-09-27", cim:"4. nap — Giant’s Causeway + Trónok Harca túra", esemenyek:[
+      { ido:"08:30", tipus:"walk", statusz:"todo", nev:"Indulás a találkozási pontra",
+        leiras:"A túra a belvárosból indul, a szállás Dél-Belfastban van — <b>számolj ~40 percet</b> (vonat az Adelaide-ről, vagy taxi).<br><b>TODO: a pontos meeting pointot nézd meg a GetYourGuide oldalán</b>, és aszerint pontosítsuk ezt az időt." },
+
+      { ido:"09:30", tipus:"star", statusz:"todo", nev:"🚐 Giant’s Causeway &amp; Game of Thrones Day Tour",
+        leiras:"<b>8,5 órás</b> körút angol nyelvű idegenvezetéssel, <b>£35.14 / fő</b> (14 930 Ft).<br>A térkép megállói alapján: <b>Giant’s Causeway</b> · <b>Dark Hedges</b> (a Királyi út) · <b>Ballintoy</b> kikötő · <b>Cushendun</b> barlangok · <b>Carrickfergus</b> · <b>Bushmills</b>.<br><em>Most fizetni sem kell — „book now, pay later”, és szept. 26-ig ingyen lemondható.</em>",
+        ar:35.14, kinek:"mind",
+        linkek:[["GetYourGuide ↗","https://www.getyourguide.com/en-gb/belfast-l442/from-belfast-giant-s-causeway-and-game-of-thrones-day-tour-t23368"],["Giant’s Causeway 🗺","https://www.google.com/maps/search/Giant%27s+Causeway"],["Dark Hedges 🗺","https://www.google.com/maps/search/The+Dark+Hedges+Northern+Ireland"]] },
+
+      { ido:"18:00", tipus:"info", statusz:"opt", nev:"Visszaérkezés Belfastba",
+        leiras:"8,5 óra után, nagyjából 18:00 körül. Innen vagy vissza a szállásra, vagy egy vacsora a városban." },
+
+      { ido:"20:00", tipus:"info", statusz:"opt", nev:"Meccs előtti este",
+        leiras:"Egész napos túra után úgyis kifekszik mindenki — pont jó, mert másnap van a lényeg." }
+    ]},
+
+    { datum:"2026-09-28", cim:"5. nap — ⚽ MECCSNAP", esemenyek:[
+      { ido:"12:00", tipus:"info", statusz:"opt", nev:"Ráhangolódás",
+        leiras:"Meccsnapon Dél-Belfastban tele lesznek a pubok — a <b>Lisburn Road</b> a hely. A stadion melletti utcák is megtelnek szurkolóval." },
+
+      { ido:"18:45", tipus:"walk", statusz:"fix", nev:"Séta a stadionba",
+        leiras:"A szállás a Windsor Park mellett van — <b>pár perc gyalog</b>. Nulla utazás, nulla parkolás, nulla stressz. Ez volt a szállásválasztás nyerő húzása.",
+        linkek:[["Windsor Park 🗺","https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast"]] },
+
+      { ido:"19:45", tipus:"star", statusz:"fix", nev:"🏴 ÉSZAK-ÍRORSZÁG – MAGYARORSZÁG 🇭🇺",
+        leiras:"<b>Windsor Park.</b> Ezért az egészért. 🔥<br><b>TODO: meccsjegy!</b>",
+        ar:0, kinek:"mind" }
+    ]},
+
+    { datum:"2026-09-29", cim:"6. nap — Hazaút", esemenyek:[
+      { ido:"09:00", tipus:"walk", statusz:"fix", nev:"Check-out + indulás",
+        leiras:"Visszafelé ugyanaz fordítva: <b>Adelaide</b> állomás (500 m séta) → vonat a <b>Grand Centralig</b> → <b>Airport Express 300</b> (~35–40 perc).<br>Visszaszámolva: 11:55-ös géphez legyél kint 10:15-re → 300-as ~09:30 → indulás a szállásról <b>09:00-kor</b>. A retúrjegy már megvan az odaútról." },
+
+      { ido:"11:55", tipus:"plane", statusz:"fix", nev:"easyJet — Belfast Intl → Edinburgh",
+        leiras:"Érkezés <b>12:50</b>, 55 perc.<br>Jó választás: a 08:55-ös £16.99 lett volna, ez <b>£14.49 akciós</b> ÉS később indul — nem kell hajnalban kelni a meccs után.",
+        ar:14.49, kinek:"mind",
+        linkek:[["easyJet","https://www.easyjet.com/"]] },
+
+      { ido:"12:50", tipus:"info", statusz:"opt", nev:"⏳ 7 óra Edinburgh-ben",
+        leiras:"A Ryanair 19:50-kor megy, ugyanarról a reptérről — <b>lekésni gyakorlatilag lehetetlen</b>.<br>Hátizsákkal nem kell csomagmegőrző: Airlink be a városba, ~4 óra kajálás/sör, 17:30-ra vissza. Egyetlen plusz költség <b>£8.50/fő</b>.<br><em>7 órát a reptéren ülni bűn lenne — ez az utolsó közös délután.</em>",
+        ar:8.50, kinek:"mind" },
+
+      { ido:"17:50", tipus:"info", statusz:"fix", nev:"Vissza a reptérre — búcsú",
+        leiras:"2 órával a Ryanair indulása előtt. Innen elválnak az útjaink — de mindenki ugyanonnan indul, szóval a búcsú a terminálban van, nem félúton." },
+
+      { ido:"18:16", tipus:"bus", statusz:"todo", nev:"Én: Edinburgh Airport → Perth (Ember)",
+        leiras:"<b>Közvetlen járat a reptérről, nem kell bemenni a városba!</b> Stop E (Outside Terminal) → Perth Railway Station (Northbound), <b>1h 01m</b>, érkezés 19:17.<br>Tökéletes időzítés: az EdinBRO csapatot 17:50-re kikíséred, aztán 18:16-kor te is indulsz. <em>Legalább 10 perccel indulás előtt foglalni kell!</em>",
+        ar:7.55, kinek:"en",
+        linkek:[["Ember foglalás","https://www.ember.to/"],["Stop E 🗺","https://www.google.com/maps/search/Edinburgh+Airport+bus+stop+E"]] },
+
+      { ido:"19:50", tipus:"plane", statusz:"fix", nev:"FR 1077 — Edinburgh → Budapest",
+        leiras:"Ryanair Sun, 2h 50m, érkezés <b>23:40</b> Budapestre. Ők hazaértek. 👋",
+        linkek:[["Járat","https://www.flightradar24.com/data/flights/fr1077"]] }
+    ]}
+  ],
+
+  // ---- KÖLTSÉGEK -------------------------------------------
+  // kinek: "mind" = fejenként | "en" = MrMcSeki | "ok" = EdinBRO
+  koltsegek: [
+    { ikon:"🛏️", nev:"Szállás Edinburgh — 2 éj",       ar:108.95, kinek:"mind", statusz:"todo", megj:"Abbeyhill A9 · £435.80 ÷ 4 · nem visszatéríthető" },
+    { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"todo", megj:"Windsor Park terrace · £380 ÷ 4 · listaár £525 volt" },
+    { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"todo", megj:"RK 179, szept. 26. 15:40 · Ryanair UK" },
+    { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:14.49,  kinek:"mind", statusz:"todo", megj:"easyJet, szept. 29. 11:55 · AKCIÓS ár, gyorsan el kell kapni" },
+    { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:35.14, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · 14 930 Ft/fő · ingyen lemondható szept. 26-ig" },
+    { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:0,      kinek:"mind", statusz:"todo", megj:"vendégszektor · MLSZ Szurkolói Klub-tagság kell hozzá · ár még nincs meg" },
+    { ikon:"🚌", nev:"Airlink 100 — Open Return",      ar:8.50,   kinek:"mind", statusz:"fix",  megj:"reptér↔város oda-vissza, olcsóbb mint 2× £6 single" },
+    { ikon:"🚌", nev:"Airlink extra single (én)",      ar:6.00,   kinek:"en",   statusz:"fix",  megj:"3× utazom: éjjel ki eléjük, vissza, majd 26-án újra" },
+    { ikon:"🚌", nev:"Airport Express 300 — retúr",    ar:13.50,  kinek:"mind", statusz:"todo", megj:"Belfast Intl ↔ Grand Central · árat nézd meg a Translink appban" },
+    { ikon:"🚌", nev:"Airlink az utolsó délutánra",    ar:8.50,   kinek:"mind", statusz:"opt",  megj:"csak ha bemegyünk a városba a 7 órás várakozás alatt" },
+    { ikon:"🚍", nev:"Perth → Edinburgh busz (oda)",   ar:7.45,   kinek:"en",   statusz:"fix",  megj:"Citylink, szept. 24. 15:39" },
+    { ikon:"🚍", nev:"Edinburgh Airport → Perth (Ember)",ar:7.55, kinek:"en",   statusz:"todo", megj:"szept. 29. 18:16 → 19:17 · közvetlen a reptérről, Airlink nélkül" },
+    { ikon:"🍺", nev:"Kaja + sör keret",               ar:120.00, kinek:"mind", statusz:"opt",  megj:"becsült, 5 napra ~£24/nap" }
+  ],
+
+  // ---- TEENDŐK ---------------------------------------------
+  // [cím, leírás, ETA/határidő]
+  teendok: [
+    ["🔴 Belfast szállás lefoglalása",  "£380 · ingyenes lemondás aug. 27-ig",              "2026-08-26"],
+    ["🔴 Edinburgh szállás lefoglalása","£435.80 nem visszatéríthető · van £471-es lemondható verzió is","2026-08-31"],
+    ["🔴 MLSZ Szurkolói Klub — mind a 4","idegenbeli meccsre CSAK klubtag vehet jegyet · ez az előfeltétel","2026-08-22"],
+    ["🔴 Szurkolói azonosítók begyűjtése","a jegyek nevesítve vannak, mind a 4 fő azonosítója kell a vásárláshoz","2026-08-24"],
+    ["🔴 Meccsjegy — Windsor Park",     "vendégkeret ~900 jegy, el szokott fogyni · meccsjegy.mlsz.hu","2026-09-05"],
+    ["easyJet Belfast → Edi repjegy",   "£14.49 AKCIÓS · szept. 29. 11:55 — az ár bármikor elfogyhat","2026-08-20"],
+    ["Edinburgh → Belfast repjegy",     "RK 179, szept. 26. 15:40 · £14.99/fő = £59.96 négyre","2026-08-20"],
+    ["Csoportos kassza indítása",       "Revolut / Monzo közös pot",                        "2026-08-25"],
+    ["Giant’s Causeway túra lefoglalása","szept. 27. 9:30 · most fizetni sem kell, szept. 26-ig ingyen lemondható","2026-08-30"],
+    ["Túra meeting pointjának ellenőrzése","hol és hánykor gyülekezik — eszerint pontosítjuk a reggeli indulást","2026-09-20"],
+    ["Pub a szept. 25-i meccsre",       "kivetítős hely Edinburgh-ben, asztalfoglalás",     "2026-09-18"],
+    ["Translink app letöltése",         "Airport Express 300 retúrjegy · a valós árat ott látod","2026-09-20"],
+    ["Airlink retúr jegy online",       "£8.50 / fő · Open Return",                         "2026-09-22"],
+    ["Kézipoggyász-méret egyeztetés",   "Ryanair 40×20×25 · easyJet 45×36×20 — a szűkebbhez igazodj","2026-09-22"],
+    ["Fotós igazolvány mindenkinél",    "belföldi járat, de a Ryanair és az easyJet is kéri","2026-09-23"],
+    ["Ember Perth → Edinburgh",         "szept. 24. 15:39 · £7.45 · min. 10 perccel indulás előtt","2026-09-24"],
+    ["Ember reptér → Perth",            "szept. 29. 18:16 · £7.55 · min. 10 perccel indulás előtt","2026-09-29"]
+  ],
+
+  // ---- AIRLINK ---------------------------------------------
+  airlink: {
+    reptérrol: ["Up to every 10 minutes — 04:12 → 01:00", "Up to every 20 minutes — 01:15 → 04:00"],
+    waverleyrol:["Up to every 10 minutes — 03:40 → 00:20", "Up to every 20 minutes — 00:35 → 03:25"],
+    arak: [["Airport Single","£6.00"],["Airport Open Return","£8.50"]],
+    megallok:["Edinburgh Airport (Stop A)","Airport Hotels","Maybury","Drum Brae South","Edinburgh Zoo",
+              "Western Corner","Murrayfield","Wester Coates","Haymarket","West End",
+              "Princes Street / Hanover Street","Waverley Bridge"]
+  }
+};
+</script>
+
+<div class="hdrwrap">
+<div class="topbar">
+  <div class="wrap">
+    <img class="logoimg" src="img/logo.png" alt="Skócia + Észak-Írország"
+         onerror="this.remove()">
+    <span class="logo">EDIN<span>BRO</span></span>
+    <span class="chip">Belfast 2026</span>
+    <span class="hdr-sp"></span>
+    <div class="cd">
+      <span class="lb">Meccsig<br>hátra</span>
+      <span class="nums" id="count"></span>
+    </div>
+  </div>
+</div>
+
+<nav><div class="wrap" id="tabs">
+  <button class="on" data-t="home">Áttekintés</button>
+  <button data-t="mecs">Meccsek</button>
+  <button data-t="prog">Program</button>
+  <button data-t="szal">Szállás</button>
+  <button data-t="utaz">Utazás</button>
+  <button data-t="kolt">Költségek</button>
+  <button data-t="todo">Teendők</button>
+</div></nav>
+</div>
+
+<div class="wrap">
+  <div class="nextbar" id="nextbar" style="display:none">
+    <span class="pulse"></span>
+    <span class="txt"><span class="lab">Következő</span>
+      <span class="val" id="nbVal"></span><span class="when" id="nbWhen"></span></span>
+    <span class="arr">›</span>
+  </div>
+  <div class="muted" id="hdrSub" style="margin-top:10px"></div>
+</div>
+
+<main class="wrap">
+
+  <section id="home" class="on">
+    <div class="hero" id="hero"></div>
+    <div class="grid2" id="homeUtak"></div>
+    <div class="card">
+      <h3>Becsült költség</h3>
+      <div class="big" id="homeSum">—</div>
+      <p class="muted">Fejenként. Részletes bontás a <b>Költségek</b> fülön, ott állítható a létszám is.</p>
+    </div>
+  </section>
+
+  <section id="mecs"></section>
+  <section id="prog"></section>
+  <section id="szal"></section>
+
+  <section id="utaz">
+    <div class="card">
+      <h3>Airlink 100 — 24/7 express</h3>
+      <p class="muted">Edinburgh Airport ⟷ városközpont. Reptéren <b>Stop A</b>, a városban <b>Waverley Bridge</b>.</p>
+      <div class="grid2" style="margin-top:10px">
+        <div><b>Reptérről indul</b><div id="alA"></div></div>
+        <div><b>Waverley Bridge-ről indul</b><div id="alB"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Airlink árak</h3>
+      <div id="alPrice"></div>
+      <p class="muted">Oda-vissza az <b>Open Return £8.50</b> jobb, mint 2× £6.00 — £3.50-et spórolsz fejenként.</p>
+    </div>
+    <div class="card">
+      <h3>Airlink megállók (sorrendben)</h3>
+      <!-- Az útvonaltérkép; ha a fájl hiányzik, visszaesik a megállók listájára. -->
+      <img id="alMap" class="routemap" src="img/menetrend.png" alt="Airlink 100 útvonal"
+           onerror="this.remove();document.getElementById('alStops').hidden=false">
+      <div id="alStops" hidden></div>
+      <p class="muted" style="margin-top:10px"><b>Nekünk:</b> Princes Street / Hanover Street a St Andrew Square-hez (Meki) van legközelebb — onnan sétálunk. A Waverley Bridge a végállomás.</p>
+    </div>
+    <div class="card">
+      <h3>Reptéri megállók (érkezéskor)</h3>
+      <div class="kv"><span><b>A</b> — Airlink 100</span><b style="color:#7fe3b4">ez kell nekünk</b></div>
+      <div class="kv"><span><b>B</b> — Service 17</span><span class="muted">helyi járat</span></div>
+      <div class="kv"><span><b>C</b> — Service 18</span><span class="muted">helyi járat</span></div>
+      <p class="muted">Az International 2 &amp; UK Domestic Arrivals kijáratnál, a Multi Storey Car Park előtt.</p>
+    </div>
+
+    <div class="card" style="border-color:var(--gold)">
+      <h3>Belfast — szállás ⟷ város</h3>
+      <p class="muted">A szállás a Windsor Park mellett van, Dél-Belfastban. A belváros <b>2,7 km</b>, kb. <b>32 perc séta</b>.</p>
+      <div class="kv"><span>🚶 Gyalog</span><b>~32 perc</b></div>
+      <div class="kv"><span>🚌 Metro 9-es busz</span><b>Lisburn Road, ~10 perc</b></div>
+      <div class="kv"><span>🚆 Vonat (Adelaide)</span><b>600 m séta a stadionig</b></div>
+      <div class="kv"><span>🚕 Taxi</span><b>~£8–10 az egész kocsi</b></div>
+      <p class="muted" style="margin-top:10px"><b>Útvonal:</b> stadion → vasúti gyalogos híd → Lower Windsor Avenue → <b>Lisburn Road</b> → Bradbury Place / Shaftesbury Square → Great Victoria Street → belváros. A Lisburn Road tele van kávézókkal, a séta nem büntetés.</p>
+      <a class="btn ghost" href="https://www.google.com/maps/dir/National+Football+Stadium+Windsor+Park/Belfast+City+Hall" target="_blank" rel="noopener">Séta útvonal 🗺</a>
+    </div>
+
+    <div class="card">
+      <h3>Belfast — reptér ⟷ szállás</h3>
+      <p class="muted">A <b>Belfast International (BFS)</b> 29 km-re van a várostól.</p>
+      <div class="grid2" style="margin-top:8px">
+        <div>
+          <b style="color:#7fe3b4">🚌 Airport Express 300 — ez lesz</b>
+          <div class="kv"><span>Végállomás</span><b>Grand Central Stn</b></div>
+          <div class="kv"><span>Idő</span><b>~35–40 perc</b></div>
+          <div class="kv"><span>Sűrűség</span><b>15 percenként</b></div>
+          <div class="kv"><span>Retúrjegy</span><b>~£13.50 / fő</b></div>
+          <div class="kv"><span>Leszállás</span><b>végállomás</b></div>
+          <p class="muted">Négyre oda-vissza <b>~£54</b>. A köztes belfasti megállók a központtól északra vannak — nekünk a végállomás kell.</p>
+        </div>
+        <div>
+          <b>🚕 Taxi — ha esik / éjszaka</b>
+          <div class="kv"><span>Idő</span><b>~35 perc</b></div>
+          <div class="kv"><span>Ár</span><b>~£35–40 / kocsi</b></div>
+          <div class="kv"><span>Oda-vissza négyre</span><b>~£70–80</b></div>
+          <p class="muted">Grand Centraltól a szállásig külön csak ~£8–10.</p>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">Hátizsákkal a busz <b>~£20–25-öt spórol a csoportnak</b>. A 300-as jegyárnál a források eltérnek (£9 single / £13.50 retúr, illetve egy „Smartlink" £5-ös ár) — vedd meg a Translink appban, ott látod a valós árat.</p>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
+        <b>Az utolsó szakasz: Grand Central → szállás</b>
+        <div class="kv"><span>🚆 Vonat → Adelaide, majd séta</span><b>~5 perc + 500 m</b></div>
+        <div class="kv"><span>🚶 Gyalog végig</span><b>~2,2 km / ~28 perc</b></div>
+        <p class="muted">A Grand Central <b>egyben vasútállomás is</b>, szóval nem kell kimenni az utcára — csak peront váltunk, és a Lisburn felé menő vonattal két megálló az <b>Adelaide</b>. Onnan a gyalogos hídon át pár perc a stadion, a szállás meg ott van mellette.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Hasznos linkek</h3>
+      <a class="btn" href="https://www.lothianbuses.com/our-services/airport-buses/" target="_blank" rel="noopener">Airlink</a>
+      <a class="btn ghost" href="https://www.ember.to/" target="_blank" rel="noopener">Ember (Perth)</a>
+      <a class="btn ghost" href="https://www.ryanair.com/" target="_blank" rel="noopener">Ryanair</a>
+      <a class="btn ghost" href="https://www.easyjet.com/" target="_blank" rel="noopener">easyJet</a>
+      <a class="btn ghost" href="https://www.translink.co.uk/services/airport-services" target="_blank" rel="noopener">Translink 300</a>
+      <a class="btn ghost" href="https://bustimes.org/services/300-belfast-europa-buscentre-international-airport" target="_blank" rel="noopener">300 menetrend</a>
+    </div>
+  </section>
+
+  <section id="kolt">
+    <div class="card">
+      <div class="sumgrid" id="ktSum"></div>
+      <div class="ctrl">
+        <label for="fo">Hányan vagyunk?</label>
+        <input type="number" id="fo" min="1" max="20" value="4">
+        <span class="muted">a „fejenként" tételek ezzel szorzódnak</span>
+      </div>
+      <table>
+        <thead><tr><th>Tétel</th><th>Kinek</th><th class="n">£ / fő</th></tr></thead>
+        <tbody id="ktBody"></tbody>
+        <tfoot id="ktFoot"></tfoot>
+      </table>
+      <p class="muted" style="margin-top:12px">A <span class="tag todo">todo</span> tételeknél még nincs végleges ár. Ahogy megvan, beírjuk az <code>ADAT.koltsegek</code> részbe és minden magától frissül.</p>
+    </div>
+
+    <div class="card">
+      <h3>💰 Ki mennyit fizetett</h3>
+      <p class="muted">Írd be, ki mit dobott be előre. Kiszámolja, ki tartozik és kinek.</p>
+      <div id="payRows" style="margin-top:12px"></div>
+      <div id="paySum" style="margin-top:12px"></div>
+      <button class="btn ghost" id="payReset">Nullázás</button>
+    </div>
+  </section>
+
+  <section id="todo">
+    <div class="card">
+      <h3>Mi van még hátra</h3>
+      <div class="muted" id="todoStat"></div>
+      <div class="bar"><i id="todoBar" style="width:0%"></i></div>
+      <div id="todoList"></div>
+      <button class="btn ghost" id="resetTodo" style="margin-top:12px">Pipák törlése</button>
+    </div>
+    <div class="card">
+      <h3>Amit még nem tudok</h3>
+      <ul class="muted" style="margin:0;padding-left:20px">
+        <li>Meccsjegy ára és hol vesszük</li>
+        <li>Pontos check-in / check-out időpontok mindkét szállásnál</li>
+        <li>Az Airport Express 300 valós jegyára a Translink appban</li>
+        <li>Ki mennyit fizetett már ki eddig</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="rail rail-l"><img src="img/schafer.png" alt="Schäfer András"
+  onerror="this.closest('.rail').remove()"></div>
+<div class="rail rail-r"><img src="img/szoboszlai.png" alt="Szoboszlai Dominik"
+  onerror="this.closest('.rail').remove()"></div>
+
+<footer>EDINBRO · a mi appunk · offline is megy</footer>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const HU_NAP=["vasárnap","hétfő","kedd","szerda","csütörtök","péntek","szombat"];
+const HU_HO=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
+const fmtDate=iso=>{const d=new Date(iso+"T12:00:00");
+  return `${d.getFullYear()}. ${HU_HO[d.getMonth()]} ${d.getDate()}. (${HU_NAP[d.getDay()]})`};
+const fmtShort=iso=>{const d=new Date(iso+"T12:00:00");
+  return `${HU_HO[d.getMonth()]} ${d.getDate()}. ${HU_NAP[d.getDay()].slice(0,3)}`};
+const gbp=n=>"£"+n.toFixed(2);
+const TAGS={fix:"fix",todo:"todo",opt:"opcionális"};
+
+/* ---- zászlók (inline SVG) ---- */
+const FLAG={
+  hu:`<svg class="flag" viewBox="0 0 6 4"><rect width="6" height="4" fill="#fff"/><rect width="6" height="1.334" fill="#ce2939"/><rect y="2.666" width="6" height="1.334" fill="#477050"/></svg>`,
+  ua:`<svg class="flag" viewBox="0 0 6 4"><rect width="6" height="2" fill="#0057b7"/><rect y="2" width="6" height="2" fill="#ffd700"/></svg>`,
+  ni:`<svg class="flag" viewBox="0 0 6 4"><rect width="6" height="4" fill="#fff"/><rect x="2.5" width="1" height="4" fill="#cf142b"/><rect y="1.5" width="6" height="1" fill="#cf142b"/><circle cx="3" cy="2" r=".78" fill="#fff" stroke="#cf142b" stroke-width=".13"/><path d="M3 1.45 L3.15 1.85 L3.55 1.85 L3.22 2.1 L3.35 2.5 L3 2.25 L2.65 2.5 L2.78 2.1 L2.45 1.85 L2.85 1.85 Z" fill="#cf142b"/></svg>`
+};
+
+/* Címerek. Ha a fájl nincs meg, automatikusan visszaesik a zászlóra,
+   szóval a `img/cimer.png` bemásolásával magától életbe lép. */
+const CIMER={ hu:"img/cimer.png" };
+function cimerFallback(){
+  $$(".crest img").forEach(im=>im.onerror=()=>{
+    const sp=im.parentElement; sp.innerHTML=FLAG[sp.dataset.z]||"";
+  });
+}
+
+/* ---- fejléc + visszaszámláló ---- */
+const FO=ADAT.meccsek[ADAT.foMeccs];
+$("#hdrSub").textContent=`${FO.hazai} – ${FO.vendeg} · ${fmtDate(FO.datum)} ${FO.ido} · ${FO.hol}`;
+const dt=(d,t)=>new Date(d+"T"+(/^\d{2}:\d{2}$/.test(t)?t:"12:00")+":00");
+
+function cdParts(target){
+  let s=Math.max(0,Math.floor((target-Date.now())/1000));
+  return [Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+}
+function cdText(target){
+  const [d,h,m,s]=cdParts(target);
+  return d>0?`${d} nap ${h} óra ${m} perc`:`${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+/* ---- következő esemény keresése ---- */
+const MIND=[];
+ADAT.napok.forEach((nap,ni)=>nap.esemenyek.forEach((e,ei)=>
+  MIND.push({...e,nap:nap.datum,napCim:nap.cim,ts:dt(nap.datum,e.ido),id:ni+"-"+ei})));
+MIND.sort((a,b)=>a.ts-b.ts);
+function kovetkezo(){ return MIND.find(e=>e.ts>Date.now()) }
+
+function tick(){
+  const [d,h,m,s]=cdParts(dt(FO.datum,FO.ido));
+  $("#count").innerHTML=[[d,"NAP"],[h,"ÓRA"],[m,"PERC"],[s,"MP"]]
+    .map(([v,l])=>`<i><b>${String(v).padStart(2,"0")}</b><u>${l}</u></i>`).join("");
+  const k=kovetkezo();
+  if(k){
+    $("#nextbar").style.display="flex";
+    $("#nbVal").textContent=k.nev.replace(/<[^>]+>/g,"");
+    $("#nbWhen").textContent=`${fmtShort(k.nap)} ${k.ido} · ${cdText(k.ts)} múlva`;
+    const hn=$("#heroNext");
+    if(hn) hn.textContent=`${fmtShort(k.nap)} · ${k.ido}`;
+  }
+  $$(".fx-cd").forEach(x=>{
+    const t=new Date(x.dataset.ts);
+    x.textContent = t>Date.now() ? "⏳ "+cdText(t)+" múlva" : "lement";
+  });
+}
+
+/* ---- MECCSEK fül ---- */
+function meccsKartya(m){
+  const t=dt(m.datum,m.ido), d=new Date(m.datum+"T12:00:00");
+  const csapat=(nev,fifa,z)=>`<div class="fx-team">
+      <span class="crest" data-z="${z}">${CIMER[z]
+        ? `<img src="${CIMER[z]}" alt="">` : FLAG[z]}</span>
+      <div class="nm">${nev}</div><div class="fifa">FIFA ${fifa}.</div></div>`;
+  return `<div class="fx">
+    <div class="fx-l">
+      ${csapat(m.hazai,m.hazaiFifa,m.hazaiZ)}
+      <span class="fx-vs">VS</span>
+      ${csapat(m.vendeg,m.vendegFifa,m.vendegZ)}
+    </div>
+    <div class="fx-r">
+      <div class="fx-date"><b>${HU_HO[d.getMonth()].replace(".","")}</b><i>${d.getDate()}</i></div>
+      <div class="fx-info">
+        <div class="fx-time">${m.ido}</div>
+        <div class="fx-venue">${m.hol}</div>
+        <div class="fx-meta">
+          <span class="watch ${m.nezes}">${m.nezes==="live"?"🔴 ÉLŐBEN":"📺 TÉVÉBŐL"}</span>
+          <span class="fx-cd" data-ts="${t.toISOString()}">—</span>
+        </div>
+      </div>
+      <a class="btn ghost" style="margin:0" href="${m.link}" target="_blank" rel="noopener">Megnyitás ↗</a>
+      <div class="fx-note">${m.megj}</div>
+    </div>
+  </div>`;
+}
+$("#mecs").innerHTML = ADAT.meccsek.map(meccsKartya).join("") + `
+  <div class="warn">
+    <h3>🎟️ Meccsjegy — ez nem szabadon vehető</h3>
+    <p style="margin:0 0 10px">Idegenbeli válogatott meccsre <b>kizárólag MLSZ Szurkolói Klub-tagok</b> vehetnek jegyet,
+    és a jegyek <b>nevesítve</b> vannak: minden jegyhez az adott ember <b>szurkolói azonosítója</b> kell.</p>
+    <div class="kv"><span>Windsor Park befogadóképesség</span><b>~18 400</b></div>
+    <div class="kv"><span>Várható vendégkeret</span><b>~900 jegy (5%)</b></div>
+    <div class="kv"><span>Egy vásárlás</span><b>max. 4 voucher — pont mi</b></div>
+    <div class="kv"><span>Hol veszed</span><b>meccsjegy.mlsz.hu</b></div>
+    <div class="kv"><span>Előfeltétel</span><b>Szurkolói Klub-tagság × 4</b></div>
+    <p class="muted" style="margin:10px 0 0"><b>Mikor?</b> Pontos dátum még nincs kihirdetve. Egy korábbi idegenbeli
+    meccsnél (Örményország–Magyarország) az értékesítés <b>24 nappal a meccs előtt</b> nyílt, és <b>10 napig</b> tartott
+    — 900 jegy, mind elfogyott. Ugyanezzel a ritmussal itt <b>szept. 4. körül</b> indulna, kb. szept. 14-ig.
+    <b>Ez tipp, nem hivatalos dátum</b> — figyelni kell az MLSZ oldalát.</p>
+    <p class="muted" style="margin:8px 0 0">Jó hír: egy vásárló <b>négy vouchert</b> vihet, szóval egyikőtök
+    megveheti mind a négyet — de a többiek azonosítója akkor is kell hozzá, és legalább egy jegynek a vásárló nevére kell szólnia.</p>
+    <div style="margin-top:10px">
+      <a class="btn" href="https://szovetseg.mlsz.hu/mlsz-szurkoloi-klub" target="_blank" rel="noopener">Szurkolói Klub ↗</a>
+      <a class="btn ghost" href="https://meccsjegy.mlsz.hu/" target="_blank" rel="noopener">MLSZ Meccsjegy ↗</a>
+      <a class="btn ghost" href="https://valogatottjegy.mlsz.hu/articles/1/vasarlasi-tajekoztato" target="_blank" rel="noopener">Vásárlási tájékoztató ↗</a>
+    </div>
+  </div>
+  <div class="card" id="hirCard">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+      <h3 style="margin:0;flex:1">📰 Válogatott hírek</h3>
+      <button class="rf" id="hirRf" title="Frissítés">↻</button>
+    </div>
+    <div class="muted" id="hirStat">Betöltés…</div>
+    <div id="hirList"></div>
+    <div style="margin-top:10px">
+      <a class="btn ghost" href="${ADAT.hirek.rovat}" target="_blank" rel="noopener">Nemzeti Sport ↗</a>
+    </div>
+  </div>`;
+cimerFallback();
+
+/* ---- HÍREK: Google Hírek RSS CORS-proxyn keresztül ---- */
+const HKEY="eb_hirek";
+// több proxy, mert egyik-másik időnként elérhetetlen
+const FORRASOK=[
+  u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),
+  u=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u),
+  u=>"https://corsproxy.io/?url="+encodeURIComponent(u)
+];
+const varj=ms=>new Promise(r=>setTimeout(r,ms));
+// fetch időkorláttal — enélkül egy beragadt proxy örökre függőben hagyná a betöltést
+async function fetchIdo(u,ms=8000){
+  const c=new AbortController(), t=setTimeout(()=>c.abort(),ms);
+  try{ return await fetch(u,{cache:"no-store",signal:c.signal}) }
+  finally{ clearTimeout(t) }
+}
+let hirFut=false;
+const ora=ms=>{const p=Math.floor(ms/60000);
+  if(p<60)return p+" perce"; const o=Math.floor(p/60);
+  if(o<24)return o+" órája"; return Math.floor(o/24)+" napja"};
+
+function rajzolHirek(d,statusz){
+  $("#hirStat").innerHTML=statusz;
+  $("#hirList").className=(d&&d.length)?"news":"";
+  $("#hirList").innerHTML=(d||[]).map(h=>`
+    <a class="hir" href="${h.link}" target="_blank" rel="noopener">
+      ${h.kep?`<img class="th" src="${h.kep}" alt="" loading="lazy"
+         onerror="this.style.display='none'">`:""}
+      <span class="bd">
+        <span class="hd">${h.datum} · Nemzeti Sport</span>
+        <span class="hc">${h.cim}</span>
+      </span></a>`).join("");
+}
+
+async function hirekBetolt(eros){
+  if(hirFut)return; hirFut=true;
+  try{ await hirekBetoltBelso(eros) } finally{ hirFut=false }
+}
+async function hirekBetoltBelso(eros){
+  const gyorsitott=JSON.parse(localStorage.getItem(HKEY)||"null");
+  if(gyorsitott&&!eros){
+    const friss=Date.now()-gyorsitott.t<30*60000;   // fél óránál frissebb → jó lesz
+    rajzolHirek(gyorsitott.d,`Frissítve ${ora(Date.now()-gyorsitott.t)} · forrás: Nemzeti Sport`
+      +(friss?"":" · <em>frissítés…</em>"));
+    if(friss)return;
+  } else rajzolHirek([],"Betöltés…");
+
+  // "2026.08.04. 22:35" vagy "2026. 08. 01." -> timestamp
+  const datum=sz=>{
+    const m=(sz||"").match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})\.?(?:\s*(\d{2}):(\d{2}))?/);
+    return m?new Date(+m[1],+m[2]-1,+m[3],+(m[4]||12),+(m[5]||0)).getTime():0;
+  };
+
+  // minden proxyt kétszer próbálunk — időnként egy pillanatra elhalnak
+  for(let kor=0;kor<2;kor++) for(const f of FORRASOK){
+    try{
+      const r=await fetchIdo(f(ADAT.hirek.forras),12000);
+      if(!r.ok)continue;
+      const doc=new DOMParser().parseFromString(await r.text(),"text/html");
+      const latott=new Set(), nyers=[];
+      // a dátumcímkékből indulunk, és felfelé keressük a hozzá tartozó cikklinket
+      doc.querySelectorAll(".article-card-date").forEach(dd=>{
+        let p=dd, a=null;
+        for(let i=0;i<6&&p;i++){
+          p=p.parentElement; if(!p)break;
+          a=p.querySelector('a[aria-label][href*="/magyar-valogatott/20"]'); if(a)break;
+        }
+        if(!a)return;
+        const href=a.getAttribute("href");
+        if(latott.has(href))return; latott.add(href);
+        const kep=p.querySelector("img.article-card-thumbnail,img[src*='cdn.nemzetisport']");
+        nyers.push({ cim:(a.getAttribute("aria-label")||"").trim(),
+                     link:"https://www.nemzetisport.hu"+href,
+                     kep:kep?kep.getAttribute("src"):"",
+                     ts:datum(dd.textContent) });
+      });
+      const d=nyers.filter(h=>h.cim&&h.ts)
+        .sort((a,b)=>b.ts-a.ts).slice(0,ADAT.hirek.darab)
+        .map(h=>({...h,kor:ora(Date.now()-h.ts),
+                  datum:new Date(h.ts).toLocaleDateString("hu-HU",{year:"numeric",month:"2-digit",day:"2-digit"})}));
+      if(!d.length)continue;
+      localStorage.setItem(HKEY,JSON.stringify({t:Date.now(),d}));
+      rajzolHirek(d,"Frissítve az imént · forrás: Nemzeti Sport");
+      return;
+    }catch(e){}
+    await varj(400);
+  }
+  if(gyorsitott)rajzolHirek(gyorsitott.d,
+    `Mentett változat · ${ora(Date.now()-gyorsitott.t)} frissült · <span style="color:#ff9aa8">most nem sikerült frissíteni</span>`);
+  else rajzolHirek([],`<span style="color:#ff9aa8">Nem sikerült betölteni a híreket.</span><br>
+    Ez akkor fordul elő, ha nincs net, vagy a hírszolgáltató épp nem elérhető.
+    A gombbal újrapróbálhatod, vagy nyisd meg közvetlenül a Nemzeti Sportot.`);
+}
+$("#hirRf").onclick=()=>{$("#hirRf").classList.add("spin");
+  hirekBetolt(true).finally(()=>$("#hirRf").classList.remove("spin"))};
+hirekBetolt(false);
+
+/* ---- Áttekintés: összefoglaló főkártya ---- */
+$("#hero").innerHTML = `
+  <div class="hero-l">
+    <div class="hero-t">Belfast 2026</div>
+    <div class="hero-s">${FO.hazai} – ${FO.vendeg} · ${FO.hol} · ${fmtDate(FO.datum)}</div>
+    <div class="hero-chips">
+      <span><b>4</b> fő</span>
+      <span><b>${ADAT.napok.length}</b> nap</span>
+      <span><b>${ADAT.szallasok.length}</b> város</span>
+      <span><b>${ADAT.meccsek.length}</b> meccs</span>
+      <span><b>${ADAT.utak.length}</b> utazás</span>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="hero-k"><span>Következő</span><b class="sm" id="heroNext">—</b></div>
+    <div class="hero-k"><span>Becsült / fő</span><b id="heroSum">—</b></div>
+  </div>`;
+
+/* ---- Áttekintés: az utak ---- */
+const KIC={mind:"mind a 4-en",MrMcSeki:"MrMcSeki",EdinBRO:"EdinBRO"};
+$("#homeUtak").innerHTML = ADAT.utak.map(u=>`
+  <div class="card">
+    <h3>${u.cim}</h3>
+    <div class="muted" style="margin:-6px 0 8px">${u.datum} · ${KIC[u.ki]||u.ki}</div>
+    <div class="kv"><span>Járat</span><b>${u.jarat}</b></div>
+    <div class="kv"><span>Indulás</span><b>${u.ind}</b></div>
+    <div class="kv"><span>Érkezés</span><b>${u.erk}</b></div>
+    <div class="kv"><span>Menetidő</span><b>${u.ido}</b></div>
+    <div class="kv"><span>Ár</span><b>${u.ar}</b></div>
+    <p class="muted" style="margin:8px 0 0">${u.megj}</p>
+  </div>`).join("");
+
+/* ---- PROGRAM ---- */
+let szuro="mind";
+function rajzolProg(){
+  const k=kovetkezo();
+  $("#prog").innerHTML=`
+    <div class="filters">
+      ${[["mind","Összes"],["fix","✔ Fix"],["todo","● Teendő"],["opt","◆ Opcionális"]]
+        .map(([v,l])=>`<button data-f="${v}" class="${szuro===v?"on":""}">${l}</button>`).join("")}
+    </div>` +
+  ADAT.napok.map((nap,ni)=>{
+    const evs=nap.esemenyek.map((e,ei)=>{
+      const id=ni+"-"+ei, hid=(szuro!=="mind"&&e.statusz!==szuro);
+      return `<div class="ev ${e.tipus}${hid?" hide":""}${k&&k.id===id?" next":""}">
+        ${e.ar?`<span class="price">${gbp(e.ar)}</span>`:""}
+        <div class="t">${e.ido}</div>
+        <div class="n">${e.nev} <span class="tag ${e.statusz}">${TAGS[e.statusz]}</span></div>
+        ${e.leiras?`<div class="d">${e.leiras}</div>`:""}
+        ${e.linkek?`<div class="lnks">${e.linkek.map(([l,u])=>
+          `<a href="${u}" target="_blank" rel="noopener">${l}</a>`).join("")}</div>`:""}
+      </div>`}).join("");
+    const lathato=nap.esemenyek.some(e=>szuro==="mind"||e.statusz===szuro);
+    return lathato?`<div class="day"><h2>${nap.cim} <small>${fmtDate(nap.datum)}</small></h2>
+      <div class="tl">${evs}</div></div>`:"";
+  }).join("");
+  $$("#prog .filters button").forEach(b=>b.onclick=()=>{szuro=b.dataset.f;rajzolProg()});
+}
+rajzolProg();
+
+/* ---- SZÁLLÁS ---- */
+$("#szal").innerHTML=ADAT.szallasok.map(sz=>`
+  <div class="card">
+    <h3>${sz.varos} · ${sz.ejszaka} éj</h3>
+    <div style="font-size:18px;font-weight:700">${sz.nev}</div>
+    <div class="muted" style="margin-bottom:10px">${sz.tipus} · ${sz.hazigazda}</div>
+    <div class="kv"><span>Dátum</span><b>${fmtShort(sz.be)} → ${fmtShort(sz.ki)}</b></div>
+    <div class="kv"><span>Férőhely</span><b>${sz.fero}</b></div>
+    <div class="kv"><span>Értékelés</span><b>${sz.ertekeles}</b></div>
+    <div class="kv"><span>Ár összesen</span><b style="color:var(--yellow)">${gbp(sz.ar)}</b></div>
+    <div class="kv"><span>Fejenként (4 fő)</span><b style="color:var(--yellow)">${gbp(sz.ar/4)}</b></div>
+    <div class="kv"><span>Éjszakánként / fő</span><b>${gbp(sz.ar/4/sz.ejszaka)}</b></div>
+    <p class="muted" style="margin:8px 0 0">${sz.arMasik}</p>
+    <div class="grid2" style="margin-top:12px">
+      <div><b style="color:#7fe3b4">✔ Mellette szól</b>
+        <ul style="margin:6px 0 0;padding-left:18px;font-size:13.5px">${sz.plusz.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+      <div><b style="color:#ff9aa8">✖ Figyelni rá</b>
+        <ul style="margin:6px 0 0;padding-left:18px;font-size:13.5px">${sz.minusz.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+    </div>
+    <a class="btn" href="${sz.link}" target="_blank" rel="noopener">Airbnb ↗</a>
+    <a class="btn ghost" href="${sz.terkep}" target="_blank" rel="noopener">Google Mapsben ↗</a>
+    <div class="mapbox">
+      <iframe title="${sz.varos} — térkép" referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=${encodeURIComponent(sz.terkepQ)}&z=15&output=embed"></iframe>
+    </div>
+  </div>`).join("")+`
+  <div class="card">
+    <h3>Összegzés</h3>
+    <div class="kv"><span>Szállás összesen (4 fő, 5 éj)</span><b style="color:var(--yellow)">${gbp(ADAT.szallasok.reduce((s,x)=>s+x.ar,0))}</b></div>
+    <div class="kv"><span>Fejenként</span><b style="color:var(--yellow)">${gbp(ADAT.szallasok.reduce((s,x)=>s+x.ar,0)/4)}</b></div>
+    <p class="muted">A belfasti a jobb vétel: 3 éj, 2 hálószoba, Superhost, a stadion mellett — és fejenként olcsóbb, mint a 2 éjszakás edinburghi.</p>
+  </div>`;
+
+/* ---- UTAZÁS ---- */
+$("#alA").innerHTML=ADAT.airlink.reptérrol.map(x=>`<div class="kv"><span>${x}</span></div>`).join("");
+$("#alB").innerHTML=ADAT.airlink.waverleyrol.map(x=>`<div class="kv"><span>${x}</span></div>`).join("");
+$("#alPrice").innerHTML=ADAT.airlink.arak.map(([k,v])=>`<div class="kv"><span>${k}</span><b>${v}</b></div>`).join("");
+$("#alStops").innerHTML=ADAT.airlink.megallok.map((s,i)=>
+  `<span class="tag" style="margin:3px 3px 0 0">${i+1}. ${s}</span>`).join("");
+
+/* ---- KÖLTSÉGEK ---- */
+const KINEK={mind:"fejenként",en:"MrMcSeki",ok:"EdinBRO"};
+let enOsszes=0, csoportOsszes=0;
+function szamol(){
+  const fo=Math.max(1,+$("#fo").value||1);
+  enOsszes=0; csoportOsszes=0;
+  $("#ktBody").innerHTML=ADAT.koltsegek.map(k=>{
+    if(k.kinek==="mind"){csoportOsszes+=k.ar*fo;enOsszes+=k.ar}
+    else if(k.kinek==="en"){csoportOsszes+=k.ar;enOsszes+=k.ar}
+    else csoportOsszes+=k.ar*(fo-1);
+    return `<tr><td><b>${k.ikon?k.ikon+" ":""}${k.nev}</b><br><span class="muted">${k.megj||""}</span></td>
+      <td><span class="tag ${k.statusz}">${KINEK[k.kinek]}</span></td>
+      <td class="n">${k.ar?gbp(k.ar):"<span class='muted'>?</span>"}</td></tr>`}).join("");
+  $("#ktFoot").innerHTML=`
+    <tr><td colspan="2">MrMcSeki összesen</td><td class="n" style="color:var(--yellow)">${gbp(enOsszes)}</td></tr>
+    <tr><td colspan="2" class="muted" style="font-size:13px;font-weight:400">Csoport összesen (${fo} fő)</td>
+        <td class="n muted" style="font-weight:600">${gbp(csoportOsszes)}</td></tr>`;
+  $("#homeSum").textContent=gbp(enOsszes);
+  const hs=$("#heroSum"); if(hs) hs.textContent=gbp(enOsszes);
+  localStorage.setItem("eb_fo",fo);
+  rajzolPay();
+}
+
+/* ---- ki mit fizetett ---- */
+const PKEY="eb_pay2";
+let pay=JSON.parse(localStorage.getItem(PKEY)||'[{"n":"MrMcSeki","v":0},{"n":"EdinBRO 2","v":0},{"n":"EdinBRO 3","v":0},{"n":"EdinBRO 4","v":0}]');
+function rajzolPay(){
+  const fo=Math.max(1,+$("#fo").value||1);
+  while(pay.length<fo)pay.push({n:"EdinBRO "+(pay.length+1),v:0});
+  pay=pay.slice(0,fo);
+  const be=pay.reduce((s,p)=>s+(+p.v||0),0), resz=csoportOsszes/fo;
+  $("#payRows").innerHTML=pay.map((p,i)=>{
+    const bal=(+p.v||0)-resz;
+    return `<div class="pay">
+      <input type="text" data-i="${i}" data-k="n" value="${p.n}">
+      <input type="number" data-i="${i}" data-k="v" value="${p.v}" step="0.01" placeholder="0">
+      <span class="bal ${bal>=0?"pos":"neg"}">${bal>=0?"+":""}${gbp(bal)}</span></div>`}).join("");
+  // nagy összegzés a Költségek fül tetején
+  $("#ktSum").innerHTML=`
+    <div class="sumbox"><span>Csoport összesen</span><b>${gbp(csoportOsszes)}</b></div>
+    <div class="sumbox f"><span>Fejenként (${fo} fő)</span><b>${gbp(csoportOsszes/fo)}</b></div>
+    <div class="sumbox j"><span>Eddig befizetve</span><b>${gbp(be)}</b></div>
+    <div class="sumbox h"><span>Még hiányzik</span><b>${gbp(Math.max(0,csoportOsszes-be))}</b></div>`;
+  $("#paySum").innerHTML=`
+    <div class="kv"><span>Fejenkénti rész</span><b>${gbp(resz)}</b></div>
+    <div class="kv"><span>Eddig befizetve</span><b>${gbp(be)}</b></div>
+    <div class="kv"><span>Még hiányzik</span><b style="color:${csoportOsszes-be>0?"var(--yellow)":"#7fe3b4"}">${gbp(Math.max(0,csoportOsszes-be))}</b></div>
+    <p class="muted" style="margin:8px 0 0">A <span style="color:#7fe3b4">zöld</span> szám azt jelenti, hogy annyival <b>többet</b> fizetett a részénél — neki tartoztok. A <span style="color:#ff9aa8">piros</span> annyival tartozik a kasszába.</p>`;
+  $$("#payRows input").forEach(inp=>inp.oninput=()=>{
+    pay[+inp.dataset.i][inp.dataset.k]=inp.dataset.k==="v"?(+inp.value||0):inp.value;
+    localStorage.setItem(PKEY,JSON.stringify(pay));
+    if(inp.dataset.k==="v")rajzolPay();
+  });
+}
+$("#payReset").onclick=()=>{pay=pay.map(p=>({n:p.n,v:0}));localStorage.setItem(PKEY,JSON.stringify(pay));rajzolPay()};
+$("#fo").value=localStorage.getItem("eb_fo")||4;
+$("#fo").addEventListener("input",szamol);
+szamol();
+
+/* ---- TEENDŐK ---- */
+const TKEY="eb_todo";
+let pipa=JSON.parse(localStorage.getItem(TKEY)||"[]");
+function rajzolTodo(){
+  const kesz=ADAT.teendok.filter((_,i)=>pipa[i]).length, ossz=ADAT.teendok.length;
+  $("#todoStat").textContent=`${kesz} / ${ossz} kész`;
+  $("#todoBar").style.width=(kesz/ossz*100)+"%";
+  const ma=Date.now();
+  $("#todoList").innerHTML=ADAT.teendok.map(([c,a,eta],i)=>{
+    const t=new Date(eta+"T23:59:59"), nap=Math.ceil((t-ma)/86400000);
+    const suru = pipa[i] ? "" : nap<0 ? "late" : nap<=7 ? "soon" : "";
+    const cim = pipa[i] ? "kész" : nap<0 ? `${-nap} napja lejárt` :
+                nap===0 ? "MA!" : `${nap} nap`;
+    return `<label class="chk ${pipa[i]?"done":""}">
+      <input type="checkbox" data-i="${i}" ${pipa[i]?"checked":""}>
+      <span class="lbl"><b>${c}</b><span>${a}</span></span>
+      <span class="eta ${suru}"><b>${cim}</b><span>${fmtShort(eta)}</span></span></label>`}).join("");
+}
+rajzolTodo();
+$("#todoList").addEventListener("change",e=>{
+  pipa[+e.target.dataset.i]=e.target.checked;
+  localStorage.setItem(TKEY,JSON.stringify(pipa));rajzolTodo()});
+$("#resetTodo").onclick=()=>{pipa=[];localStorage.setItem(TKEY,"[]");rajzolTodo()};
+
+/* ---- fülek + URL hash ---- */
+function valt(t,scroll=true){
+  $$("#tabs button").forEach(x=>x.classList.toggle("on",x.dataset.t===t));
+  $$("main section").forEach(x=>x.classList.toggle("on",x.id===t));
+  if(location.hash.slice(1)!==t)history.replaceState(null,"","#"+t);
+  if(scroll)window.scrollTo({top:0,behavior:"smooth"});
+}
+$$("#tabs button").forEach(b=>b.onclick=()=>valt(b.dataset.t));
+$("#nextbar").onclick=()=>valt("prog");
+if(location.hash&&$(location.hash))valt(location.hash.slice(1),false);
+window.addEventListener("hashchange",()=>{if($(location.hash))valt(location.hash.slice(1),false)});
+
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
