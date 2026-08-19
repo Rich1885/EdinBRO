@@ -403,10 +403,10 @@ const ADAT = {
   // tipus: bus | plane | walk | star | info ; statusz: fix | todo | opt
   napok: [
     { datum:"2026-09-24", cim:"1. nap — Megérkezem Edinburgh-be", esemenyek:[
-      { ido:"15:39", tipus:"bus", statusz:"fix", nev:"Perth → Edinburgh (Citylink)",
+      { ido:"15:39", tipus:"bus", statusz:"fix", nev:"Perth → Edinburgh (Ember)",
         leiras:"Perth Railway Station (Southbound) → Edinburgh, George Street (Stop GM). 1h 37m.<br><em>Legalább 10 perccel indulás előtt le kell foglalni, különben nem áll meg!</em>",
         ar:7.45, kinek:"en",
-        linkek:[["Citylink foglalás","https://www.citylink.co.uk/"],["Perth állomás 🗺","https://www.google.com/maps/search/Perth+Railway+Station+Scotland"]] },
+        linkek:[["Ember foglalás","https://www.ember.to/"],["Perth állomás 🗺","https://www.google.com/maps/search/Perth+Railway+Station+Scotland"]] },
 
       { ido:"17:16", tipus:"walk", statusz:"fix", nev:"Megérkezés — George Street (Stop GM)",
         leiras:"Innen kb. 15 perc séta kelet felé az Abbeyhill-i lakásig.",
@@ -470,7 +470,7 @@ const ADAT = {
         linkek:[["Translink 300","https://www.translink.co.uk/services/airport-services"],["Menetrend","https://bustimes.org/services/300-belfast-europa-buscentre-international-airport"]] },
 
       { ido:"17:45", tipus:"walk", statusz:"todo", nev:"Grand Central → szállás",
-        leiras:"<b>A) Vonattal (ajánlott):</b> a Grand Central egyben vasútállomás is, szóval csak peront váltunk. Lisburn felé induló vonat → <b>Adelaide</b> megálló (~5 perc), onnan <b>kb. 500 m / 7 perc séta</b> a stadionhoz a gyalogos hídon át.<br><b>B) Gyalog végig:</b> ~2,2 km / ~28 perc a Great Victoria St → Bradbury Place → Lisburn Road vonalon.<br><em>Csomaggal és meccs előtti napon az A) a nyerő.</em>",
+        leiras:"<b>A) Vonattal (ajánlott):</b> a Grand Central egyben vasútállomás is, szóval csak peront váltunk. Lisburn felé induló vonat → <b>Adelaide</b> megálló (~5 perc), onnan <b>kb. 500 m / 7 perc séta</b> a stadionhoz a gyalogos hídon át.<br><b>B) Gyalog végig:</b> ~2,2 km / ~28 perc a Great Victoria St → Bradbury Place → Lisburn Road vonalon.",
         linkek:[["Vonatinfó","https://www.translink.co.uk/"],["Adelaide → stadion 🗺","https://www.google.com/maps/dir/Adelaide+railway+station+Belfast/National+Football+Stadium+Windsor+Park"],["Séta végig 🗺","https://www.google.com/maps/dir/Grand+Central+Station+Belfast/National+Football+Stadium+Windsor+Park"]] },
 
       { ido:"18:30", tipus:"info", statusz:"fix", nev:"🔑 Check-in — Windsor Park terrace",
@@ -488,10 +488,7 @@ const ADAT = {
         linkek:[["GetYourGuide ↗","https://www.getyourguide.com/en-gb/belfast-l442/from-belfast-giant-s-causeway-and-game-of-thrones-day-tour-t23368"],["Giant’s Causeway 🗺","https://www.google.com/maps/search/Giant%27s+Causeway"],["Dark Hedges 🗺","https://www.google.com/maps/search/The+Dark+Hedges+Northern+Ireland"]] },
 
       { ido:"18:00", tipus:"info", statusz:"opt", nev:"Visszaérkezés Belfastba",
-        leiras:"8,5 óra után, nagyjából 18:00 körül. Innen vagy vissza a szállásra, vagy egy vacsora a városban." },
-
-      { ido:"20:00", tipus:"info", statusz:"opt", nev:"Meccs előtti este",
-        leiras:"Egész napos túra után úgyis kifekszik mindenki — pont jó, mert másnap van a lényeg." }
+        leiras:"8,5 óra után, nagyjából 18:00 körül. Innen vagy vissza a szállásra, vagy egy sör a városban." }
     ]},
 
     { datum:"2026-09-28", cim:"5. nap — ⚽ MECCSNAP", esemenyek:[
@@ -517,11 +514,11 @@ const ADAT = {
         linkek:[["easyJet","https://www.easyjet.com/"]] },
 
       { ido:"12:50", tipus:"info", statusz:"opt", nev:"⏳ 7 óra Edinburgh-ben",
-        leiras:"A Ryanair 19:50-kor megy, ugyanarról a reptérről — <b>lekésni gyakorlatilag lehetetlen</b>.<br>Hátizsákkal nem kell csomagmegőrző: Airlink be a városba, ~4 óra kajálás/sör, 17:30-ra vissza. Egyetlen plusz költség <b>£8.50/fő</b>.<br><em>7 órát a reptéren ülni bűn lenne — ez az utolsó közös délután.</em>",
+        leiras:"A Ryanair 19:50-kor megy, ugyanarról a reptérről — <b>lekésni gyakorlatilag lehetetlen</b>.<br>Hátizsákkal nem kell csomagmegőrző: Airlink be a városba, ~4 óra kajálás/sör, 17:30-ra vissza. Egyetlen plusz költség <b>£8.50/fő</b>.",
         ar:8.50, kinek:"mind" },
 
       { ido:"17:50", tipus:"info", statusz:"fix", nev:"Vissza a reptérre — búcsú",
-        leiras:"2 órával a Ryanair indulása előtt. Innen elválnak az útjaink — de mindenki ugyanonnan indul, szóval a búcsú a terminálban van, nem félúton." },
+        leiras:"2 órával a Ryanair indulása előtt. Innen elválnak az útjaink" },
 
       { ido:"18:16", tipus:"bus", statusz:"todo", nev:"Én: Edinburgh Airport → Perth (Ember)",
         leiras:"<b>Közvetlen járat a reptérről, nem kell bemenni a városba!</b> Stop E (Outside Terminal) → Perth Railway Station (Northbound), <b>1h 01m</b>, érkezés 19:17.<br>Tökéletes időzítés: az EdinBRO csapatot 17:50-re kikíséred, aztán 18:16-kor te is indulsz. <em>Legalább 10 perccel indulás előtt foglalni kell!</em>",
@@ -537,6 +534,7 @@ const ADAT = {
   // ---- KÖLTSÉGEK -------------------------------------------
   // kinek: "mind" = fejenként | "en" = MrMcSeki | "ok" = EdinBRO
   koltsegek: [
+    { ikon:"🛂", nev:"UK ETA — beutazási engedély", ar:20.00, kinek:"ok", statusz:"todo", megj:"KÖTELEZŐ magyar útlevéllel · gov.uk/eta · £20/fő · enélkül fel sem szállhattok" },
     { ikon:"🛏️", nev:"Szállás Edinburgh — 2 éj",       ar:108.95, kinek:"mind", statusz:"todo", megj:"Abbeyhill A9 · £435.80 ÷ 4 · nem visszatéríthető" },
     { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"todo", megj:"Windsor Park terrace · £380 ÷ 4 · listaár £525 volt" },
     { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"todo", megj:"RK 179, szept. 26. 15:40 · Ryanair UK" },
@@ -547,7 +545,7 @@ const ADAT = {
     { ikon:"🚌", nev:"Airlink extra single (én)",      ar:6.00,   kinek:"en",   statusz:"fix",  megj:"3× utazom: éjjel ki eléjük, vissza, majd 26-án újra" },
     { ikon:"🚌", nev:"Airport Express 300 — retúr",    ar:13.50,  kinek:"mind", statusz:"todo", megj:"Belfast Intl ↔ Grand Central · árat nézd meg a Translink appban" },
     { ikon:"🚌", nev:"Airlink az utolsó délutánra",    ar:8.50,   kinek:"mind", statusz:"opt",  megj:"csak ha bemegyünk a városba a 7 órás várakozás alatt" },
-    { ikon:"🚍", nev:"Perth → Edinburgh busz (oda)",   ar:7.45,   kinek:"en",   statusz:"fix",  megj:"Citylink, szept. 24. 15:39" },
+    { ikon:"🚍", nev:"Perth → Edinburgh busz (oda)",   ar:7.45,   kinek:"en",   statusz:"fix",  megj:"Ember, szept. 24. 15:39" },
     { ikon:"🚍", nev:"Edinburgh Airport → Perth (Ember)",ar:7.55, kinek:"en",   statusz:"todo", megj:"szept. 29. 18:16 → 19:17 · közvetlen a reptérről, Airlink nélkül" },
     { ikon:"🍺", nev:"Kaja + sör keret",               ar:120.00, kinek:"mind", statusz:"opt",  megj:"becsült, 5 napra ~£24/nap" }
   ],
@@ -555,6 +553,7 @@ const ADAT = {
   // ---- TEENDŐK ---------------------------------------------
   // [cím, leírás, ETA/határidő]
   teendok: [
+    ["🔴 UK ETA — mind a 3 haver","KÖTELEZŐ a beutazáshoz · £20/fő · gov.uk/eta vagy a UK ETA app · percek alatt megvan","2026-08-25"],
     ["🔴 Belfast szállás lefoglalása",  "£380 · ingyenes lemondás aug. 27-ig",              "2026-08-26"],
     ["🔴 Edinburgh szállás lefoglalása","£435.80 nem visszatéríthető · van £471-es lemondható verzió is","2026-08-31"],
     ["🔴 MLSZ Szurkolói Klub — mind a 4","idegenbeli meccsre CSAK klubtag vehet jegyet · ez az előfeltétel","2026-08-22"],
@@ -681,25 +680,16 @@ const ADAT = {
     <div class="card">
       <h3>Belfast — reptér ⟷ szállás</h3>
       <p class="muted">A <b>Belfast International (BFS)</b> 29 km-re van a várostól.</p>
-      <div class="grid2" style="margin-top:8px">
-        <div>
-          <b style="color:#7fe3b4">🚌 Airport Express 300 — ez lesz</b>
-          <div class="kv"><span>Végállomás</span><b>Grand Central Stn</b></div>
-          <div class="kv"><span>Idő</span><b>~35–40 perc</b></div>
-          <div class="kv"><span>Sűrűség</span><b>15 percenként</b></div>
-          <div class="kv"><span>Retúrjegy</span><b>~£13.50 / fő</b></div>
-          <div class="kv"><span>Leszállás</span><b>végállomás</b></div>
-          <p class="muted">Négyre oda-vissza <b>~£54</b>. A köztes belfasti megállók a központtól északra vannak — nekünk a végállomás kell.</p>
-        </div>
-        <div>
-          <b>🚕 Taxi — ha esik / éjszaka</b>
-          <div class="kv"><span>Idő</span><b>~35 perc</b></div>
-          <div class="kv"><span>Ár</span><b>~£35–40 / kocsi</b></div>
-          <div class="kv"><span>Oda-vissza négyre</span><b>~£70–80</b></div>
-          <p class="muted">Grand Centraltól a szállásig külön csak ~£8–10.</p>
-        </div>
+      <div style="margin-top:8px">
+        <b style="color:var(--green)">🚌 Airport Express 300</b>
+        <div class="kv"><span>Végállomás</span><b>Grand Central Stn</b></div>
+        <div class="kv"><span>Idő</span><b>~35–40 perc</b></div>
+        <div class="kv"><span>Sűrűség</span><b>15 percenként</b></div>
+        <div class="kv"><span>Retúrjegy</span><b>~£13.50 / fő</b></div>
+        <div class="kv"><span>Leszállás</span><b>végállomás</b></div>
+        <p class="muted">Négyre oda-vissza <b>~£54</b>. A köztes belfasti megállók a központtól északra vannak — nekünk a végállomás kell.</p>
       </div>
-      <p class="muted" style="margin-top:10px">Hátizsákkal a busz <b>~£20–25-öt spórol a csoportnak</b>. A 300-as jegyárnál a források eltérnek (£9 single / £13.50 retúr, illetve egy „Smartlink" £5-ös ár) — vedd meg a Translink appban, ott látod a valós árat.</p>
+      <p class="muted" style="margin-top:10px">A 300-as jegyárnál a források eltérnek (£9 single / £13.50 retúr, illetve egy „Smartlink" £5-ös ár) — vedd meg a Translink appban, ott látod a valós árat.</p>
       <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
         <b>Az utolsó szakasz: Grand Central → szállás</b>
         <div class="kv"><span>🚆 Vonat → Adelaide, majd séta</span><b>~5 perc + 500 m</b></div>
@@ -735,13 +725,6 @@ const ADAT = {
       <p class="muted" style="margin-top:12px">A <span class="tag todo">todo</span> tételeknél még nincs végleges ár. Ahogy megvan, beírjuk az <code>ADAT.koltsegek</code> részbe és minden magától frissül.</p>
     </div>
 
-    <div class="card">
-      <h3>💰 Ki mennyit fizetett</h3>
-      <p class="muted">Írd be, ki mit dobott be előre. Kiszámolja, ki tartozik és kinek.</p>
-      <div id="payRows" style="margin-top:12px"></div>
-      <div id="paySum" style="margin-top:12px"></div>
-      <button class="btn ghost" id="payReset">Nullázás</button>
-    </div>
   </section>
 
   <section id="todo">
@@ -752,6 +735,21 @@ const ADAT = {
       <div id="todoList"></div>
       <button class="btn ghost" id="resetTodo" style="margin-top:12px">Pipák törlése</button>
     </div>
+    <div class="warn">
+      <h3>🛂 UK ETA — enélkül nem engedik be őket</h3>
+      <p style="margin:0 0 10px">Magyar útlevéllel az Egyesült Királyságba <b>elektronikus beutazási engedély (ETA)</b> kell.
+      Nem vízum, de <b>nélküle a Ryanair fel sem enged szállni</b> Budapesten.</p>
+      <div class="kv"><span>Kinek kell</span><b>a 3 haver (magyar útlevél)</b></div>
+      <div class="kv"><span>Ár</span><b>£20 / fő</b></div>
+      <div class="kv"><span>Érvényesség</span><b>2 év, többszöri belépés</b></div>
+      <div class="kv"><span>Elbírálás</span><b>általában percek</b></div>
+      <p class="muted" style="margin:10px 0 0"><b>MrMcSekinek nem kell</b>, ha megvan a skóciai letelepedési státusza vagy brit/ír útlevele — ezt viszont érdemes leellenőrizni.<br>
+      Az ETA a <b>Budapest → Edinburgh</b> járatnál számít; az Edinburgh → Belfast már belföldi út az Egyesült Királyságon belül.</p>
+      <div style="margin-top:10px">
+        <a class="btn" href="https://www.gov.uk/eta" target="_blank" rel="noopener">Igénylés a gov.uk-on ↗</a>
+      </div>
+    </div>
+
     <div class="card">
       <h3>Amit még nem tudok</h3>
       <ul class="muted" style="margin:0;padding-left:20px">
@@ -882,7 +880,7 @@ $("#mecs").innerHTML = ADAT.meccsek.map(meccsKartya).join("") + `
     <p class="muted" style="margin:8px 0 0">Jó hír: egy vásárló <b>négy vouchert</b> vihet, szóval egyikőtök
     megveheti mind a négyet — de a többiek azonosítója akkor is kell hozzá, és legalább egy jegynek a vásárló nevére kell szólnia.</p>
     <div style="margin-top:10px">
-      <a class="btn" href="https://szovetseg.mlsz.hu/mlsz-szurkoloi-klub" target="_blank" rel="noopener">Szurkolói Klub ↗</a>
+      <a class="btn" href="https://szurkoloiklub.mlsz.hu/main" target="_blank" rel="noopener">Szurkolói Klub ↗</a>
       <a class="btn ghost" href="https://meccsjegy.mlsz.hu/" target="_blank" rel="noopener">MLSZ Meccsjegy ↗</a>
       <a class="btn ghost" href="https://valogatottjegy.mlsz.hu/articles/1/vasarlasi-tajekoztato" target="_blank" rel="noopener">Vásárlási tájékoztató ↗</a>
     </div>
@@ -902,11 +900,13 @@ cimerFallback();
 
 /* ---- HÍREK: Google Hírek RSS CORS-proxyn keresztül ---- */
 const HKEY="eb_hirek";
-// több proxy, mert egyik-másik időnként elérhetetlen
+// A nemzetisport.hu küld "access-control-allow-origin: *" fejlécet, ezért
+// KÖZVETLENÜL is lekérhető — ez az elsődleges út. A proxyk csak tartalékok
+// (és nagy oldalnál amúgy is 413-mal elszállnak).
 const FORRASOK=[
+  u=>u,
   u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),
-  u=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u),
-  u=>"https://corsproxy.io/?url="+encodeURIComponent(u)
+  u=>"https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u)
 ];
 const varj=ms=>new Promise(r=>setTimeout(r,ms));
 // fetch időkorláttal — enélkül egy beragadt proxy örökre függőben hagyná a betöltést
@@ -946,10 +946,19 @@ async function hirekBetoltBelso(eros){
     if(friss)return;
   } else rajzolHirek([],"Betöltés…");
 
-  // "2026.08.04. 22:35" vagy "2026. 08. 01." -> timestamp
+  // A Nemzeti Sport kétféleképpen írja ki az időt:
+  //   friss cikknél relatívan  -> "2 órája", "23 órája", "18 perce", "tegnap"
+  //   régebbinél abszolút      -> "2026. 08. 17." vagy "2026.08.04. 22:35"
   const datum=sz=>{
-    const m=(sz||"").match(/(\d{4})\.\s*(\d{2})\.\s*(\d{2})\.?(?:\s*(\d{2}):(\d{2}))?/);
-    return m?new Date(+m[1],+m[2]-1,+m[3],+(m[4]||12),+(m[5]||0)).getTime():0;
+    const s=(sz||"").trim().toLowerCase(), most=Date.now();
+    let m;
+    if((m=s.match(/(\d+)\s*perce/)))  return most - m[1]*60000;
+    if((m=s.match(/(\d+)\s*[óo]r[áa]ja/))) return most - m[1]*3600000;
+    if((m=s.match(/(\d+)\s*napja/)))  return most - m[1]*86400000;
+    if(/tegnap/.test(s))              return most - 86400000;
+    if(/^most|perccel/.test(s))       return most;
+    m = s.match(/(\d{4})\.\s*(\d{1,2})\.\s*(\d{1,2})\.?(?:\s*(\d{1,2}):(\d{2}))?/);
+    return m ? new Date(+m[1],+m[2]-1,+m[3],+(m[4]||12),+(m[5]||0)).getTime() : 0;
   };
 
   // minden proxyt kétszer próbálunk — időnként egy pillanatra elhalnak
@@ -969,7 +978,13 @@ async function hirekBetoltBelso(eros){
         if(!a)return;
         const href=a.getAttribute("href");
         if(latott.has(href))return; latott.add(href);
-        const kep=p.querySelector("img.article-card-thumbnail,img[src*='cdn.nemzetisport']");
+        // A bélyegkép egy szinttel feljebb van, mint ahol a link megvan,
+        // ezért onnan tovább kell keresni felfelé.
+        let k=p, kep=null;
+        for(let i=0;i<4&&k;i++){
+          kep=k.querySelector("img.article-card-thumbnail,img[src*='cdn.nemzetisport']");
+          if(kep)break; k=k.parentElement;
+        }
         nyers.push({ cim:(a.getAttribute("aria-label")||"").trim(),
                      link:"https://www.nemzetisport.hu"+href,
                      kep:kep?kep.getAttribute("src"):"",
@@ -1110,47 +1125,21 @@ function szamol(){
       <td><span class="tag ${k.statusz}">${KINEK[k.kinek]}</span></td>
       <td class="n">${k.ar?gbp(k.ar):"<span class='muted'>?</span>"}</td></tr>`}).join("");
   $("#ktFoot").innerHTML=`
-    <tr><td colspan="2">MrMcSeki összesen</td><td class="n" style="color:var(--yellow)">${gbp(enOsszes)}</td></tr>
+    <tr><td colspan="2">Fejenként (átlag)</td><td class="n" style="color:var(--red)">${gbp(csoportOsszes/fo)}</td></tr>
+    <tr><td colspan="2" class="muted" style="font-size:13px;font-weight:400">MrMcSeki összesen</td>
+        <td class="n muted" style="font-weight:600">${gbp(enOsszes)}</td></tr>
+    <tr><td colspan="2" class="muted" style="font-size:13px;font-weight:400">EdinBRO fejenként</td>
+        <td class="n muted" style="font-weight:600">${gbp(fo>1?(csoportOsszes-enOsszes)/(fo-1):0)}</td></tr>
     <tr><td colspan="2" class="muted" style="font-size:13px;font-weight:400">Csoport összesen (${fo} fő)</td>
         <td class="n muted" style="font-weight:600">${gbp(csoportOsszes)}</td></tr>`;
-  $("#homeSum").textContent=gbp(enOsszes);
-  const hs=$("#heroSum"); if(hs) hs.textContent=gbp(enOsszes);
-  localStorage.setItem("eb_fo",fo);
-  rajzolPay();
-}
-
-/* ---- ki mit fizetett ---- */
-const PKEY="eb_pay2";
-let pay=JSON.parse(localStorage.getItem(PKEY)||'[{"n":"MrMcSeki","v":0},{"n":"EdinBRO 2","v":0},{"n":"EdinBRO 3","v":0},{"n":"EdinBRO 4","v":0}]');
-function rajzolPay(){
-  const fo=Math.max(1,+$("#fo").value||1);
-  while(pay.length<fo)pay.push({n:"EdinBRO "+(pay.length+1),v:0});
-  pay=pay.slice(0,fo);
-  const be=pay.reduce((s,p)=>s+(+p.v||0),0), resz=csoportOsszes/fo;
-  $("#payRows").innerHTML=pay.map((p,i)=>{
-    const bal=(+p.v||0)-resz;
-    return `<div class="pay">
-      <input type="text" data-i="${i}" data-k="n" value="${p.n}">
-      <input type="number" data-i="${i}" data-k="v" value="${p.v}" step="0.01" placeholder="0">
-      <span class="bal ${bal>=0?"pos":"neg"}">${bal>=0?"+":""}${gbp(bal)}</span></div>`}).join("");
-  // nagy összegzés a Költségek fül tetején
   $("#ktSum").innerHTML=`
     <div class="sumbox"><span>Csoport összesen</span><b>${gbp(csoportOsszes)}</b></div>
     <div class="sumbox f"><span>Fejenként (${fo} fő)</span><b>${gbp(csoportOsszes/fo)}</b></div>
-    <div class="sumbox j"><span>Eddig befizetve</span><b>${gbp(be)}</b></div>
-    <div class="sumbox h"><span>Még hiányzik</span><b>${gbp(Math.max(0,csoportOsszes-be))}</b></div>`;
-  $("#paySum").innerHTML=`
-    <div class="kv"><span>Fejenkénti rész</span><b>${gbp(resz)}</b></div>
-    <div class="kv"><span>Eddig befizetve</span><b>${gbp(be)}</b></div>
-    <div class="kv"><span>Még hiányzik</span><b style="color:${csoportOsszes-be>0?"var(--yellow)":"#7fe3b4"}">${gbp(Math.max(0,csoportOsszes-be))}</b></div>
-    <p class="muted" style="margin:8px 0 0">A <span style="color:#7fe3b4">zöld</span> szám azt jelenti, hogy annyival <b>többet</b> fizetett a részénél — neki tartoztok. A <span style="color:#ff9aa8">piros</span> annyival tartozik a kasszába.</p>`;
-  $$("#payRows input").forEach(inp=>inp.oninput=()=>{
-    pay[+inp.dataset.i][inp.dataset.k]=inp.dataset.k==="v"?(+inp.value||0):inp.value;
-    localStorage.setItem(PKEY,JSON.stringify(pay));
-    if(inp.dataset.k==="v")rajzolPay();
-  });
+    <div class="sumbox j"><span>MrMcSeki összesen</span><b>${gbp(enOsszes)}</b></div>`;
+  $("#homeSum").textContent=gbp(enOsszes);
+  const hs=$("#heroSum"); if(hs) hs.textContent=gbp(enOsszes);
+  localStorage.setItem("eb_fo",fo);
 }
-$("#payReset").onclick=()=>{pay=pay.map(p=>({n:p.n,v:0}));localStorage.setItem(PKEY,JSON.stringify(pay));rajzolPay()};
 $("#fo").value=localStorage.getItem("eb_fo")||4;
 $("#fo").addEventListener("input",szamol);
 szamol();
