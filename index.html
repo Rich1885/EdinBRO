@@ -201,6 +201,8 @@ th,td{padding:15px 8px;text-align:left;border-bottom:1px solid var(--line)}
 th{font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--dim)}
 td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
 tfoot td{border:0;padding-top:13px;font-size:16px;font-weight:900}
+tr.kifizetve td{background:#E4F4EC}
+tr.kifizetve td:first-child{box-shadow:inset 3px 0 0 var(--green)}
 .ctrl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
 .ctrl label{font-size:13px;color:var(--dim)}
 input[type=number],input[type=text]{background:#fff;border:1px solid var(--line);color:var(--ink);
@@ -514,8 +516,8 @@ const ADAT = {
   // kinek: "mind" = fejenként | "en" = MrMcSeki | "ok" = EdinBRO
   koltsegek: [
     { ikon:"🛂", nev:"UK ETA — beutazási engedély", ar:20.00, kinek:"ok", statusz:"todo", megj:"KÖTELEZŐ magyar útlevéllel · gov.uk/eta · £20/fő · enélkül fel sem szállhattok" },
-    { ikon:"🛏️", nev:"Szállás Edinburgh — 2 éj",       ar:87.46,  kinek:"mind", statusz:"fix",  megj:"a&o Edinburgh City · £349.85 ÷ 4 · kifizetve, foglalás megvan" },
-    { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"fix",  megj:"Windsor Park terrace · £380 ÷ 4 · foglalás visszaigazolva" },
+    { ikon:"🛏️", nev:"Szállás Edinburgh — 2 éj",       ar:87.46,  kinek:"mind", statusz:"fix", fizetve:true, megj:"a&o Edinburgh City · £349.85 ÷ 4 · kifizetve, foglalás megvan" },
+    { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"fix", fizetve:true, megj:"Windsor Park terrace · £380 ÷ 4 · foglalás visszaigazolva" },
     { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"todo", megj:"RK 179, szept. 26. 15:40 · Ryanair UK" },
     { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:14.49,  kinek:"mind", statusz:"todo", megj:"easyJet, szept. 29. 11:55 · AKCIÓS ár, gyorsan el kell kapni" },
     { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:35.14, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · 14 930 Ft/fő · ingyen lemondható szept. 26-ig" },
@@ -981,7 +983,7 @@ function szamol(){
     if(k.kinek==="mind"){csoportOsszes+=k.ar*fo;enOsszes+=k.ar}
     else if(k.kinek==="en"){csoportOsszes+=k.ar;enOsszes+=k.ar}
     else csoportOsszes+=k.ar*(fo-1);
-    return `<tr><td><b>${k.ikon?k.ikon+" ":""}${k.nev}</b><br><span class="muted">${k.megj||""}</span></td>
+    return `<tr${k.fizetve?" class=\"kifizetve\"":""}><td><b>${k.ikon?k.ikon+" ":""}${k.nev}</b><br><span class="muted">${k.megj||""}</span></td>
       <td><span class="tag ${k.statusz}">${KINEK[k.kinek]}</span></td>
       <td class="n">${k.ar?gbp(k.ar):"<span class='muted'>?</span>"}</td></tr>`}).join("");
   $("#ktFoot").innerHTML=`
