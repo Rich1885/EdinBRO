@@ -57,12 +57,35 @@ h1,h2,h3{margin:0 0 .4em;line-height:1.2}
 /* ============ MENÜ: fehér sor ============ */
 nav{background:#fff;border-bottom:1px solid var(--line);
   box-shadow:0 1px 6px rgba(20,24,35,.05)}
-nav .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-nav .wrap::-webkit-scrollbar{display:none}
-nav button{flex:0 0 auto;background:none;border:0;color:#4A5160;cursor:pointer;
+nav .wrap{display:flex;align-items:center;gap:2px}
+#tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+#tabs::-webkit-scrollbar{display:none}
+#tabs button{flex:0 0 auto;background:none;border:0;color:#4A5160;cursor:pointer;
   font:700 14px/1 inherit;padding:15px 14px;border-bottom:3px solid transparent;white-space:nowrap}
-nav button:hover{color:var(--red)}
-nav button.on{color:var(--red);border-bottom-color:var(--red)}
+#tabs button:hover{color:var(--red)}
+#tabs button.on{color:var(--red);border-bottom-color:var(--red)}
+
+/* hamburger gomb — csak keskeny nézetben látszik */
+.hamb{display:none;flex:0 0 auto;background:none;border:0;cursor:pointer;
+  width:40px;height:40px;align-items:center;justify-content:center;
+  flex-direction:column;gap:5px}
+.hamb i{display:block;width:22px;height:2.5px;background:#4A5160;border-radius:2px;
+  transition:transform .22s ease,opacity .18s ease}
+nav.open .hamb i:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+nav.open .hamb i:nth-child(2){opacity:0}
+nav.open .hamb i:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+
+@media(max-width:620px){
+  .hamb{display:flex}
+  nav .wrap{flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+  #tabs{display:none;flex-direction:column;align-items:stretch;width:100%;
+    max-height:0;overflow:hidden;transition:max-height .25s ease;order:2}
+  nav.open #tabs{display:flex;max-height:420px;overflow-y:auto}
+  #tabs button{width:100%;text-align:left;padding:14px 8px;border-bottom:1px solid var(--line);
+    border-left:3px solid transparent}
+  #tabs button.on{border-bottom-color:var(--line);border-left-color:var(--red);background:#FCEFF1}
+  #tabs button:last-child{border-bottom:0}
+}
 
 /* következő esemény — vékony csík a menü alatt */
 .nextbar{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--edge);
@@ -574,14 +597,17 @@ const ADAT = {
   </div>
 </div>
 
-<nav><div class="wrap" id="tabs">
-  <button class="on" data-t="home">Áttekintés</button>
-  <button data-t="mecs">Meccsek</button>
-  <button data-t="prog">Program</button>
-  <button data-t="szal">Szállás</button>
-  <button data-t="utaz">Utazás</button>
-  <button data-t="kolt">Költségek</button>
-  <button data-t="todo">Teendők</button>
+<nav id="mainNav"><div class="wrap">
+  <button class="hamb" id="hambBtn" aria-label="Menü" aria-expanded="false"><i></i><i></i><i></i></button>
+  <div id="tabs">
+    <button class="on" data-t="home">Áttekintés</button>
+    <button data-t="mecs">Meccsek</button>
+    <button data-t="prog">Program</button>
+    <button data-t="szal">Szállás</button>
+    <button data-t="utaz">Utazás</button>
+    <button data-t="kolt">Költségek</button>
+    <button data-t="todo">Teendők</button>
+  </div>
 </div></nav>
 </div>
 
@@ -1028,13 +1054,22 @@ $("#todoList").addEventListener("change",e=>{
 $("#resetTodo").onclick=()=>{pipa=[];Tar.set(TKEY,"[]");rajzolTodo()};
 
 /* ---- fülek + URL hash ---- */
+function menuZar(){
+  $("#mainNav").classList.remove("open");
+  $("#hambBtn").setAttribute("aria-expanded","false");
+}
 function valt(t,scroll=true){
   $$("#tabs button").forEach(x=>x.classList.toggle("on",x.dataset.t===t));
   $$("main section").forEach(x=>x.classList.toggle("on",x.id===t));
   if(location.hash.slice(1)!==t)history.replaceState(null,"","#"+t);
   if(scroll)window.scrollTo({top:0,behavior:"smooth"});
+  menuZar();
 }
 $$("#tabs button").forEach(b=>b.onclick=()=>valt(b.dataset.t));
+$("#hambBtn").onclick=()=>{
+  const nyit=$("#mainNav").classList.toggle("open");
+  $("#hambBtn").setAttribute("aria-expanded",String(nyit));
+};
 $("#nextbar").onclick=()=>valt("prog");
 if(location.hash&&$(location.hash))valt(location.hash.slice(1),false);
 window.addEventListener("hashchange",()=>{if($(location.hash))valt(location.hash.slice(1),false)});
