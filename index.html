@@ -446,9 +446,9 @@ const ADAT = {
         linkek:[["Ryanair","https://www.ryanair.com/"],["Járat","https://www.flightradar24.com/data/flights/rk179"]] },
 
       { ido:"17:00", tipus:"bus", statusz:"todo", nev:"Belfast Intl → Grand Central Station",
-        leiras:"<b>Airport Express 300</b>, végig a <b>végállomásig</b> (~35–40 perc, 15 percenként).<br>A köztes belfasti megállók (North Street, Ulster University) a városközponttól <b>északra</b> vannak — nekünk rossz irány, maradunk a buszon.<br>Retúrjegy <b>£13.50/fő</b>.",
-        ar:13.50, kinek:"mind",
-        linkek:[["Translink 300","https://www.translink.co.uk/airportservices"],["Menetrend","https://bustimes.org/services/300-belfast-europa-buscentre-international-airport"]] },
+        leiras:"<b>Airport Express 300</b>, végig a <b>végállomásig</b> (~35–40 perc, 15 percenként).<br>A köztes belfasti megállók (North Street, Ulster University) a városközponttól <b>északra</b> vannak — nekünk rossz irány, maradunk a buszon.<br>Retúrjegy <b>£11/fő</b> — előre megvehető a <b>mLink</b> appban (single £8, retúr £11).",
+        ar:11.00, kinek:"mind",
+        linkek:[["mLink app","https://www.translink.co.uk/our-apps/mlink-ticketing-app"],["Translink 300","https://www.translink.co.uk/airportservices"],["Menetrend","https://bustimes.org/services/300-belfast-europa-buscentre-international-airport"]] },
 
       { ido:"17:45", tipus:"walk", statusz:"todo", nev:"Grand Central → szállás",
         leiras:"<b>A) Vonattal (ajánlott):</b> a Grand Central egyben vasútállomás is, szóval csak peront váltunk. Lisburn felé induló vonat → <b>Adelaide</b> megálló (~5 perc), onnan <b>kb. 500 m / 7 perc séta</b> a stadionhoz a gyalogos hídon át.<br><b>B) Gyalog végig:</b> ~2,2 km / ~28 perc a Great Victoria St → Bradbury Place → Lisburn Road vonalon.",
@@ -524,7 +524,7 @@ const ADAT = {
     { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:0,      kinek:"mind", statusz:"todo", megj:"vendégszektor · MLSZ Szurkolói Klub-tagság kell hozzá · ár még nincs meg" },
     { ikon:"🚌", nev:"Airlink 100 — Open Return",      ar:8.50,   kinek:"mind", statusz:"fix",  megj:"reptér↔város oda-vissza, olcsóbb mint 2× £6 single" },
     { ikon:"🚌", nev:"Airlink extra single (én)",      ar:6.00,   kinek:"en",   statusz:"fix",  megj:"3× utazom: éjjel ki eléjük, vissza, majd 26-án újra" },
-    { ikon:"🚌", nev:"Airport Express 300 — retúr",    ar:13.50,  kinek:"mind", statusz:"todo", megj:"Belfast Intl ↔ Grand Central · árat nézd meg a Translink appban" },
+    { ikon:"🚌", nev:"Airport Express 300 — retúr",    ar:11.00,  kinek:"mind", statusz:"todo", megj:"Belfast Intl ↔ Grand Central · mLink appban vehető, előre" },
     { ikon:"🚌", nev:"Airlink az utolsó délutánra",    ar:8.50,   kinek:"mind", statusz:"opt",  megj:"csak ha bemegyünk a városba a 7 órás várakozás alatt" },
     { ikon:"🚍", nev:"Perth → Edinburgh busz (oda)",   ar:7.45,   kinek:"en",   statusz:"fix", fizetve:true, megj:"Ember, szept. 24. 15:39 · megvéve" },
     { ikon:"🚍", nev:"Edinburgh Airport → Perth (Ember)",ar:7.55, kinek:"en",   statusz:"fix", fizetve:true, megj:"szept. 29. 18:16 → 19:17 · közvetlen a reptérről, Airlink nélkül · megvéve" },
@@ -543,7 +543,7 @@ const ADAT = {
     ["Giant’s Causeway túra lefoglalása","szept. 27. 9:30 · most fizetni sem kell, szept. 26-ig ingyen lemondható","2026-08-30"],
     ["Túra meeting pointjának ellenőrzése","hol és hánykor gyülekezik — eszerint pontosítjuk a reggeli indulást","2026-09-20"],
     ["Pub a szept. 25-i meccsre",       "kivetítős hely Edinburgh-ben, asztalfoglalás",     "2026-09-18"],
-    ["Translink app letöltése",         "Airport Express 300 retúrjegy · a valós árat ott látod","2026-09-20"],
+    ["mLink app letöltése és jegy vétele","Airport Express 300 retúr · £11/fő · előre megvehető, aktiválni kell utazás előtt","2026-09-20"],
     ["Airlink retúr jegy online",       "£8.50 / fő · Open Return",                         "2026-09-22"],
   ],
 
@@ -659,11 +659,11 @@ const ADAT = {
         <div class="kv"><span>Végállomás</span><b>Grand Central Stn</b></div>
         <div class="kv"><span>Idő</span><b>~35–40 perc</b></div>
         <div class="kv"><span>Sűrűség</span><b>15 percenként</b></div>
-        <div class="kv"><span>Retúrjegy</span><b>~£13.50 / fő</b></div>
+        <div class="kv"><span>Retúrjegy</span><b>£11.00 / fő</b></div>
         <div class="kv"><span>Leszállás</span><b>végállomás</b></div>
-        <p class="muted">Négyre oda-vissza <b>~£54</b>. A köztes belfasti megállók a központtól északra vannak — nekünk a végállomás kell.</p>
+        <p class="muted">Négyre oda-vissza <b>£44</b>. A köztes belfasti megállók a központtól északra vannak — nekünk a végállomás kell.</p>
       </div>
-      <p class="muted" style="margin-top:10px">A 300-as jegyárnál a források eltérnek (£9 single / £13.50 retúr, illetve egy „Smartlink" £5-ös ár) — vedd meg a Translink appban, ott látod a valós árat.</p>
+      <p class="muted" style="margin-top:10px">A jegy előre megvehető a <b>mLink</b> appban (iOS/Android): single £8/fő, „Monthly Return” (retúr, két külön single jegyként) £11/fő. Utazás előtt kell aktiválni, 90 percig érvényes.</p>
       <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
         <b>Az utolsó szakasz: Grand Central → szállás</b>
         <div class="kv"><span>🚆 Vonat → Adelaide, majd séta</span><b>~5 perc + 500 m</b></div>
@@ -729,8 +729,7 @@ const ADAT = {
       <ul class="muted" style="margin:0;padding-left:20px">
         <li>Meccsjegy ára és hol vesszük</li>
         <li>Pontos check-in / check-out időpontok mindkét szállásnál</li>
-        <li>Az Airport Express 300 valós jegyára a Translink appban</li>
-        <li>Ki mennyit fizetett már ki eddig</li>
+                <li>Ki mennyit fizetett már ki eddig</li>
       </ul>
     </div>
   </section>
