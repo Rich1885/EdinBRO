@@ -357,13 +357,13 @@ const ADAT = {
 
     { cim:"ÁTKELÉS · Edinburgh → Belfast", datum:"szept. 26.", ki:"mind",
       jarat:"RK 179 · Ryanair UK", ind:"15:40 · Edinburgh (EDI)",
-      erk:"16:30 · Belfast International (BFS)", ido:"0h 50m", ar:"£14.99 / fő",
-      megj:"Onnan Airport Express 300 + séta a szállásig." },
+      erk:"16:30 · Belfast International (BFS)", ido:"0h 50m", ar:"£14.99 / fő · megvan",
+      megj:"Jegy megvéve. Onnan Airport Express 300 + séta a szállásig." },
 
     { cim:"VISSZA · Belfast → Edinburgh", datum:"szept. 29.", ki:"mind",
       jarat:"easyJet", ind:"11:55 · Belfast International (BFS)",
-      erk:"12:50 · Edinburgh (EDI)", ido:"0h 55m", ar:"£14.49 / fő",
-      megj:"Akciós ár. A 08:55-ös £16.99 lett volna — ez olcsóbb ÉS később megy." },
+      erk:"12:50 · Edinburgh (EDI)", ido:"0h 55m", ar:"£18.99 / fő · megvan",
+      megj:"Jegy megvéve. Később megy, mint a 08:55-ös — nem kell hajnalban kelni a meccs után." },
 
     { cim:"HAZA · Edinburgh → Budapest", datum:"szept. 29.", ki:"EdinBRO",
       jarat:"FR 1077 · Ryanair Sun", ind:"19:50 · Edinburgh (EDI)",
@@ -463,8 +463,8 @@ const ADAT = {
         leiras:"~30 perc az út. 13:00-kor indulva ~13:35-re kint vagyunk, 2 óra a felszállásig — hátizsákkal bőven elég.",
         ar:6.00, kinek:"mind" },
 
-      { ido:"15:40", tipus:"plane", statusz:"todo", nev:"RK 179 — Edinburgh → Belfast International",
-        leiras:"Ryanair UK, 0h 50m, érkezés 16:30. <b>£14.99 / fő.</b><br>A két repjegy oda-vissza £29.48/fő — ez az út legjobb vétele.",
+      { ido:"15:40", tipus:"plane", statusz:"fix", nev:"RK 179 — Edinburgh → Belfast International",
+        leiras:"Ryanair UK, 0h 50m, érkezés 16:30. <b>£14.99 / fő — jegy megvéve. ✅</b><br>A két repjegy oda-vissza £33.98/fő — még mindig az út egyik legjobb vétele.",
         ar:14.99, kinek:"mind",
         linkek:[["Ryanair","https://www.ryanair.com/"],["Járat","https://www.flightradar24.com/data/flights/rk179"]] },
 
@@ -513,8 +513,8 @@ const ADAT = {
         leiras:"Visszafelé ugyanaz fordítva: <b>Adelaide</b> állomás (500 m séta) → vonat a <b>Grand Centralig</b> → <b>Airport Express 300</b> (~35–40 perc).<br>Visszaszámolva: 11:55-ös géphez legyél kint 10:15-re → 300-as ~09:30 → indulás a szállásról <b>09:00-kor</b>. A retúrjegy már megvan az odaútról." },
 
       { ido:"11:55", tipus:"plane", statusz:"fix", nev:"easyJet — Belfast Intl → Edinburgh",
-        leiras:"Érkezés <b>12:50</b>, 55 perc.<br>Jó választás: a 08:55-ös £16.99 lett volna, ez <b>£14.49 akciós</b> ÉS később indul — nem kell hajnalban kelni a meccs után.",
-        ar:14.49, kinek:"mind",
+        leiras:"Érkezés <b>12:50</b>, 55 perc. <b>£18.99 / fő — jegy megvéve. ✅</b><br>Később indul, mint a 08:55-ös — nem kell hajnalban kelni a meccs után.",
+        ar:18.99, kinek:"mind",
         linkek:[["easyJet","https://www.easyjet.com/"]] },
 
       { ido:"12:50", tipus:"info", statusz:"opt", nev:"⏳ 7 óra Edinburgh-ben",
@@ -541,8 +541,8 @@ const ADAT = {
     { ikon:"🛂", nev:"UK ETA — beutazási engedély", ar:20.00, kinek:"ok", statusz:"todo", megj:"KÖTELEZŐ magyar útlevéllel · gov.uk/eta · £20/fő · enélkül fel sem szállhattok" },
     { ikon:"🛏️", nev:"Szállás Edinburgh — 2 éj",       ar:87.46,  kinek:"mind", statusz:"fix", fizetve:true, megj:"a&o Edinburgh City · £349.85 ÷ 4 · kifizetve, foglalás megvan" },
     { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"fix", fizetve:true, megj:"Windsor Park terrace · £380 ÷ 4 · foglalás visszaigazolva" },
-    { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"todo", megj:"RK 179, szept. 26. 15:40 · Ryanair UK" },
-    { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:14.49,  kinek:"mind", statusz:"todo", megj:"easyJet, szept. 29. 11:55 · AKCIÓS ár, gyorsan el kell kapni" },
+    { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"RK 179, szept. 26. 15:40 · Ryanair UK · megvéve" },
+    { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:18.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"easyJet, szept. 29. 11:55 · megvéve" },
     { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:35.14, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · 14 930 Ft/fő · ingyen lemondható szept. 26-ig" },
     { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:0,      kinek:"mind", statusz:"todo", megj:"vendégszektor · MLSZ Szurkolói Klub-tagság kell hozzá · ár még nincs meg" },
     { ikon:"🚌", nev:"Airlink 100 — Open Return",      ar:8.50,   kinek:"mind", statusz:"fix",  megj:"reptér↔város oda-vissza, olcsóbb mint 2× £6 single" },
@@ -561,8 +561,6 @@ const ADAT = {
     ["🔴 MLSZ Szurkolói Klub — mind a 4","idegenbeli meccsre CSAK klubtag vehet jegyet · ez az előfeltétel","2026-08-22"],
     ["🔴 Szurkolói azonosítók begyűjtése","a jegyek nevesítve vannak, mind a 4 fő azonosítója kell a vásárláshoz","2026-08-24"],
     ["🔴 Meccsjegy — Windsor Park",     "vendégkeret ~900 jegy, el szokott fogyni · meccsjegy.mlsz.hu","2026-09-05"],
-    ["easyJet Belfast → Edi repjegy",   "£14.49 AKCIÓS · szept. 29. 11:55 — az ár bármikor elfogyhat","2026-08-20"],
-    ["Edinburgh → Belfast repjegy",     "RK 179, szept. 26. 15:40 · £14.99/fő = £59.96 négyre","2026-08-20"],
     ["Giant’s Causeway túra lefoglalása","szept. 27. 9:30 · most fizetni sem kell, szept. 26-ig ingyen lemondható","2026-08-30"],
     ["Túra meeting pointjának ellenőrzése","hol és hánykor gyülekezik — eszerint pontosítjuk a reggeli indulást","2026-09-20"],
     ["Pub a szept. 25-i meccsre",       "kivetítős hely Edinburgh-ben, asztalfoglalás",     "2026-09-18"],
