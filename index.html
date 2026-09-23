@@ -265,6 +265,8 @@ input[type=text]{width:118px}
 .warn{background:#FFF4F5;border:1px solid var(--edge);border-left:4px solid var(--red2);
   border-radius:var(--r);padding:16px;margin:0 0 14px;box-shadow:var(--sh)}
 .warn h3{color:var(--red2)}
+.warn.kesz{background:#E4F4EC;border-left-color:var(--green)}
+.warn.kesz h3{color:var(--green)}
 footer{color:var(--dim);font-size:12px;text-align:center;padding:26px 0 30px}
 
 /* ---- mikrointerakciók ---- */
@@ -389,7 +391,7 @@ const ADAT = {
       terkep:"https://www.google.com/maps/search/50+Blackfriars+Street+Edinburgh+EH1+1NE",
       terkepQ:"50 Blackfriars Street, Edinburgh EH1 1NE, United Kingdom",
       plusz:["A Royal Mile mellett, az Óvárosban — 9.2-es helyszín-pontszám","Fejenként £87.46 — kifizetve, foglalás visszaigazolva","<b>Zárt, privát szoba csak nekünk négyünknek</b> — nem dorm, nem alszik be idegen","<b>Saját zuhany + WC a szobában</b> — az a&o szerint minden szobájuk ilyen","<b>Ágynemű benne van</b> az árban (csak a törölköző nincs)","Saját pub a házban (Bar50), ingyen wifi","24 órás recepció — az éjszakai érkezés sem gond","Check-out szombaton <b>11:00</b>-ig, nem 10-ig"],
-      minusz:["<b>Törölköző nincs az árban</b> — £1.85/db a recepción, vagy hozz sajátot","Tusfürdő/sampon nem garantált — hostel, vigyél magaddal","Emeletes ágyak, nem rendes ágyak","7.1 az összpontszám — ez hostel-szint, nem hotel","Ezen az áron nem visszatéríthető és előre fizetős","A reggeli nincs benne (£10/fő/nap)","Készpénzt nem fogadnak el — csak kártya"] },
+      minusz:["<b>Törölköző nincs az árban</b> — mindenki sajátot visz (a recepción £1.85/db lenne)","Tusfürdő/sampon nem garantált — hostel, vigyél magaddal","Emeletes ágyak, nem rendes ágyak","7.1 az összpontszám — ez hostel-szint, nem hotel","Ezen az áron nem visszatéríthető és előre fizetős","A reggeli nincs benne (£10/fő/nap)","Készpénzt nem fogadnak el — csak kártya"] },
 
     { varos:"Belfast", nev:"Traditional Belfast Terrace by Windsor Park",
       tipus:"Egész ház · Dél-Belfast", hazigazda:"William · Superhost · 9 éve ad ki",
@@ -400,7 +402,7 @@ const ADAT = {
       terkep:"https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast",
       terkepQ:"National Football Stadium at Windsor Park, Belfast",
       plusz:["A Windsor Park stadion MELLETT — gyalog a meccsre 🔥","Superhost, 100% válaszarány, órán belül válaszol","Egész ház <b>privát bejárattal</b> — a fürdő is csak a miénk","<b>Sampon + tusfürdő + hajszárító van</b>, ágynemű szintén","Teljes konyha (sütő, mikró, fagyasztó, edények), mosógép, Lidl a sarkon","<b>Észak-Írországban nincs idegenforgalmi adó</b> — a £380 a végleges ár","Foglalás visszaigazolva — William elfogadta"],
-      minusz:["<b>Törölköző nincs</b> — az „Essentials” a hirdetésben kifejezetten <em>unavailable</em>","<b>2 franciaágy 4 főre</b> — szobánként ketten osztoztok egy ágyon","Nincs szárítógép és nincs légkondi","Location 4.4 ★ (Dél-Belfast, nem belváros)","Belváros 2,7 km / ~32 perc séta"] }
+      minusz:["<b>Törölköző nincs</b> — az „Essentials” a hirdetésben kifejezetten <em>unavailable</em> · mindenki sajátot visz","<b>2 franciaágy 4 főre</b> — szobánként ketten osztoztok egy ágyon","Nincs szárítógép és nincs légkondi","Location 4.4 ★ (Dél-Belfast, nem belváros)","Belváros 2,7 km / ~32 perc séta"] }
   ],
 
   // ---- NAPOK ÉS ESEMÉNYEK ----------------------------------
@@ -417,7 +419,7 @@ const ADAT = {
         linkek:[["George Street 🗺","https://www.google.com/maps/search/George+Street+Edinburgh"]] },
 
       { ido:"17:45", tipus:"info", statusz:"fix", nev:"🔑 Check-in — a&o Edinburgh City",
-        leiras:"50 Blackfriars Street, Old Town. Foglalási szám <b>6043233572</b> / MECSEKI. Check-in 15:00-tól, <b>24 órás recepció</b>, szóval az éjszakai visszaérkezés sem gond.<br><b>Útlevél + bankkártya kell a pultnál</b>, készpénzt nem fogadnak el.<br>Kérj <b>4 kulcskártyát</b>, és vegyél <b>4 törölközőt £1.85/db</b> (£7.40) — az ágynemű benne van az árban.<br>Reggeli külön £10/fő/nap, ha kéritek.",
+        leiras:"50 Blackfriars Street, Old Town. Foglalási szám <b>6043233572</b> / MECSEKI. Check-in 15:00-tól, <b>24 órás recepció</b>, szóval az éjszakai visszaérkezés sem gond.<br><b>Útlevél + bankkártya kell a pultnál</b>, készpénzt nem fogadnak el.<br>Kérj <b>4 kulcskártyát</b>. Az ágynemű benne van az árban, <b>törölközőt mindenki hoz magával</b>.<br>Reggeli külön £10/fő/nap, ha kéritek.",
         linkek:[["Airbnb hirdetés","https://www.airbnb.co.uk/rooms/1195473316521984246?adults=4&check_in=2026-09-24&check_out=2026-09-26"]] },
 
       { ido:"21:55", tipus:"plane", statusz:"fix", nev:"FR 1018 — Budapest felszáll",
@@ -504,8 +506,8 @@ const ADAT = {
         linkek:[["Windsor Park 🗺","https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast"]] },
 
       { ido:"19:45", tipus:"star", statusz:"fix", nev:"🏴 ÉSZAK-ÍRORSZÁG – MAGYARORSZÁG 🇭🇺",
-        leiras:"<b>Windsor Park.</b> Ezért az egészért. 🔥<br><b>TODO: meccsjegy!</b>",
-        ar:0, kinek:"mind" }
+        leiras:"<b>Windsor Park.</b> Ezért az egészért. 🔥<br><b>A jegyek megvannak ✅</b> — 17 500 Ft/fő, vendégszektor.<br>A jegyek <b>nevesítve</b> vannak: mindenki vigye az útlevelét a stadionba.",
+        ar:41.29, kinek:"mind" }
     ]},
 
     { datum:"2026-09-29", cim:"6. nap — Hazaút", esemenyek:[
@@ -544,14 +546,13 @@ const ADAT = {
     { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"RK 179, szept. 26. 15:40 · Ryanair UK · megvéve" },
     { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:18.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"easyJet, szept. 29. 11:55 · megvéve" },
     { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:35.14, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · 14 930 Ft/fő · ingyen lemondható szept. 26-ig" },
-    { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:0,      kinek:"mind", statusz:"todo", megj:"vendégszektor · MLSZ Szurkolói Klub-tagság kell hozzá · ár még nincs meg" },
+    { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:41.29,  kinek:"mind", statusz:"fix", fizetve:true, megj:"vendégszektor · 17 500 Ft/fő · nevesített jegy · megvéve" },
     { ikon:"🚌", nev:"Airlink 100 — Open Return",      ar:8.50,   kinek:"mind", statusz:"fix", fizetve:true, megj:"4× £8.50 = £34 · airlink100.co.uk · szept. 25 → 26. · megvéve" },
     { ikon:"🚌", nev:"Airlink extra single (én)",      ar:6.00,   kinek:"en",   statusz:"fix",  megj:"szept. 24. 23:15, ki eléjük · a buszon kártyával, nem kell előre megvenni" },
     { ikon:"🚌", nev:"Airport Express 300 — retúr",    ar:11.00,  kinek:"mind", statusz:"todo", megj:"Belfast Intl ↔ Grand Central · mLink appban vehető, előre" },
     { ikon:"🚌", nev:"Airlink az utolsó délutánra",    ar:8.50,   kinek:"mind", statusz:"opt",  megj:"csak ha bemegyünk a városba a 7 órás várakozás alatt" },
     { ikon:"🚍", nev:"Perth → Edinburgh busz (oda)",   ar:7.45,   kinek:"en",   statusz:"fix", fizetve:true, megj:"Ember, szept. 24. 15:39 · megvéve" },
     { ikon:"🚍", nev:"Edinburgh Airport → Perth (Ember)",ar:7.55, kinek:"en",   statusz:"fix", fizetve:true, megj:"szept. 29. 18:16 → 19:17 · közvetlen a reptérről, Airlink nélkül · megvéve" },
-    { ikon:"🧻", nev:"Törölköző — a&o Edinburgh",      ar:1.85,   kinek:"mind", statusz:"todo", megj:"nincs a szobaárban · £1.85/db a recepción · egyszeri, nem naponta" },
     { ikon:"🏛️", nev:"Edinburgh visitor levy",          ar:4.37,   kinek:"mind", statusz:"todo", megj:"5% a szállásra, 2026. júl. 24-től · ~£17.49 a szobára · helyszínen, kártyával" },
     { ikon:"🍺", nev:"Kaja + sör keret",               ar:120.00, kinek:"mind", statusz:"opt",  megj:"becsült, 5 napra ~£24/nap" }
   ],
@@ -560,15 +561,12 @@ const ADAT = {
   // [cím, leírás, ETA/határidő]
   teendok: [
     ["🔴 UK ETA — mind a 3 BRO","KÖTELEZŐ a beutazáshoz · £20/fő · gov.uk/eta vagy a UK ETA app · percek alatt megvan","2026-08-25"],
-    ["🔴 MLSZ Szurkolói Klub — mind a 4","idegenbeli meccsre CSAK klubtag vehet jegyet · ez az előfeltétel","2026-08-22"],
-    ["🔴 Szurkolói azonosítók begyűjtése","a jegyek nevesítve vannak, mind a 4 fő azonosítója kell a vásárláshoz","2026-08-24"],
-    ["🔴 Meccsjegy — Windsor Park",     "vendégkeret ~900 jegy, el szokott fogyni · meccsjegy.mlsz.hu","2026-09-05"],
     ["Giant’s Causeway túra lefoglalása","szept. 27. 9:30 · most fizetni sem kell, szept. 26-ig ingyen lemondható","2026-08-30"],
     ["Túra meeting pointjának ellenőrzése","hol és hánykor gyülekezik — eszerint pontosítjuk a reggeli indulást","2026-09-20"],
     ["Pub a szept. 25-i meccsre",       "kivetítős hely Edinburgh-ben, asztalfoglalás",     "2026-09-18"],
     ["mLink app letöltése és jegy vétele","Airport Express 300 retúr · £11/fő · előre megvehető, aktiválni kell utazás előtt","2026-09-20"],
     ["🔑 Online check-in az a&o appban","foglalás 6043233572 / MECSEKI · appban vagy a helyszíni kiosknál · így nem kell hajnalban papírozni","2026-09-23"],
-    ["🧴 Csomaglista: tusfürdő + fogkrém","Ediben semmi piperecikk nem garantált · Belfastban van sampon és tusfürdő","2026-09-24"],
+    ["🧴 Csomaglista: törölköző + tusfürdő + fogkrém","egyik szálláson sincs törölköző · Ediben piperecikk sem garantált (Belfastban van sampon és tusfürdő)","2026-09-24"],
   ],
 
   // ---- AIRLINK ---------------------------------------------
@@ -754,8 +752,7 @@ const ADAT = {
     <div class="card">
       <h3>Amit még nem tudok</h3>
       <ul class="muted" style="margin:0;padding-left:20px">
-        <li>Meccsjegy ára és hol vesszük</li>
-        <li>Pontos check-in / check-out időpontok mindkét szállásnál</li>
+        <li>Belfasti check-in / check-out pontos időpontja (Williamtől)</li>
                 <li>Ki mennyit fizetett már ki eddig</li>
       </ul>
     </div>
@@ -871,23 +868,20 @@ function meccsKartya(m){
   </div>`;
 }
 $("#mecs").innerHTML = ADAT.meccsek.map(meccsKartya).join("") + `
-  <div class="warn">
-    <h3>🎟️ Meccsjegy — ez nem szabadon vehető</h3>
-    <p style="margin:0 0 10px">Idegenbeli válogatott meccsre <b>kizárólag MLSZ Szurkolói Klub-tagok</b> vehetnek jegyet,
-    és a jegyek <b>nevesítve</b> vannak: minden jegyhez az adott ember <b>szurkolói azonosítója</b> kell.</p>
+  <div class="warn kesz">
+    <h3>🎟️ Meccsjegy — MEGVAN ✅</h3>
+    <p style="margin:0 0 10px">Mind a négy jegy megvéve, <b>17 500 Ft/fő</b> (~£41.29). Vendégszektor, Windsor Park.<br>
+    A jegyek <b>nevesítve</b> vannak — <b>mindenki vigye az útlevelét a stadionba</b>, a nevet ellenőrizhetik a beléptetésnél.</p>
     <div class="kv"><span>Windsor Park befogadóképesség</span><b>~18 400</b></div>
-    <div class="kv"><span>Várható vendégkeret</span><b>~900 jegy (5%)</b></div>
-    <div class="kv"><span>Egy vásárlás</span><b>max. 4 voucher — pont mi</b></div>
-    <div class="kv"><span>Hol veszed</span><b>meccsjegy.mlsz.hu</b></div>
-    <div class="kv"><span>Előfeltétel</span><b>Szurkolói Klub-tagság × 4</b></div>
-    <p class="muted" style="margin:10px 0 0"><b>Mikor?</b> Pontos dátum még nincs kihirdetve. Egy korábbi idegenbeli
-    meccsnél (Örményország–Magyarország) az értékesítés <b>24 nappal a meccs előtt</b> nyílt, és <b>10 napig</b> tartott
-    — 900 jegy, mind elfogyott. Ugyanezzel a ritmussal itt <b>szept. 4. körül</b> indulna, kb. szept. 14-ig.
-    <b>Ez tipp, nem hivatalos dátum</b> — figyelni kell az MLSZ oldalát.</p>
-    <p class="muted" style="margin:8px 0 0">Jó hír: egy vásárló <b>négy vouchert</b> vihet, szóval egyikőtök
-    megveheti mind a négyet — de a többiek azonosítója akkor is kell hozzá, és legalább egy jegynek a vásárló nevére kell szólnia.</p>
+    <div class="kv"><span>Jegyek</span><b>4 db · vendégszektor</b></div>
+    <div class="kv"><span>Ár</span><b>17 500 Ft/fő (~£41.29)</b></div>
+    <div class="kv"><span>Kezdés</span><b>szept. 28. 19:45</b></div>
+    <div class="kv"><span>A stadionba kell</span><b>jegy + útlevél</b></div>
+    <p class="muted" style="margin:10px 0 0"><b>Meccsnapra:</b> a szállás a stadion mellett van, pár perc séta — nulla utazás, nulla parkolás.
+    A vendégszektorba <b>külön beléptetés</b> van, érdemes időben ott lenni.
+    A jegy nevesítve van, szóval <b>útlevél nélkül ne indulj el</b> a stadionba.</p>
     <div style="margin-top:10px">
-      <a class="btn" href="https://szurkoloiklub.mlsz.hu/" target="_blank" rel="noopener">Szurkolói Klub ↗</a>
+      <a class="btn" href="https://www.google.com/maps/search/National+Football+Stadium+Windsor+Park+Belfast" target="_blank" rel="noopener">Windsor Park 🗺</a>
       <a class="btn ghost" href="https://meccsjegy.mlsz.hu/" target="_blank" rel="noopener">MLSZ Meccsjegy ↗</a>
       <a class="btn ghost" href="https://valogatottjegy.mlsz.hu/articles/1/vasarlasi-tajekoztato" target="_blank" rel="noopener">Vásárlási tájékoztató ↗</a>
     </div>
