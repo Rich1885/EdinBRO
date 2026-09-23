@@ -184,6 +184,8 @@ section.on{display:block}
 /* útvonaltérkép kép (Airlink) — sötét hátterű, ezért kap keretet */
 .routemap{width:100%;height:auto;display:block;border-radius:10px;
   border:1px solid var(--edge);background:#0d1b34}
+.shot{width:100%;height:auto;display:block;border-radius:10px;margin:10px 0 4px;
+  border:1px solid var(--edge);background:#fff;box-shadow:var(--sh)}
 
 /* ============ IDŐVONAL ============ */
 .filters{display:flex;gap:7px;margin:0 0 16px;flex-wrap:wrap}
@@ -489,8 +491,8 @@ const ADAT = {
         leiras:"A túra a belvárosból indul, a szállás Dél-Belfastban van — <b>számolj ~40 percet</b> (vonat az Adelaide-ről, vagy taxi).<br><b>TODO: a pontos meeting pointot nézd meg a GetYourGuide oldalán</b>, és aszerint pontosítsuk ezt az időt." },
 
       { ido:"09:30", tipus:"star", statusz:"todo", nev:"🚐 Giant’s Causeway &amp; Game of Thrones Day Tour",
-        leiras:"<b>8,5 órás</b> körút angol nyelvű idegenvezetéssel, <b>£35.14 / fő</b> (14 930 Ft).<br>A térkép megállói alapján: <b>Giant’s Causeway</b> · <b>Dark Hedges</b> (a Királyi út) · <b>Ballintoy</b> kikötő · <b>Cushendun</b> barlangok · <b>Carrickfergus</b> · <b>Bushmills</b>.<br><em>Most fizetni sem kell — „book now, pay later”, és szept. 26-ig ingyen lemondható.</em>",
-        ar:35.14, kinek:"mind",
+        leiras:"<b>8,5 órás</b> körút angol nyelvű idegenvezetéssel. <b>Az ár leesett: £22.40 / fő</b> (£140 helyett £89.60 négyre, <b>−36%</b>) — ez <b>£12.74/fő megtakarítás</b> a korábbi £35.14-hez képest.<img class=\"shot\" src=\"img/tura-ar.png\" alt=\"GetYourGuide — Giant's Causeway túra, £89.60 négy főre\" onerror=\"this.remove()\">A térkép megállói alapján: <b>Giant’s Causeway</b> · <b>Dark Hedges</b> (a Királyi út) · <b>Ballintoy</b> kikötő · <b>Cushendun</b> barlangok · <b>Carrickfergus</b> · <b>Bushmills</b>.<br><em>Most fizetni sem kell — „book now, pay later”, és szept. 26-ig ingyen lemondható. <b>Ezt az árat érdemes most lefoglalni</b>, kockázat nélkül.</em>",
+        ar:22.40, kinek:"mind",
         linkek:[["GetYourGuide ↗","https://www.getyourguide.com/en-gb/belfast-l442/from-belfast-giant-s-causeway-and-game-of-thrones-day-tour-t23368"],["Giant’s Causeway 🗺","https://www.google.com/maps/search/Giant%27s+Causeway"],["Dark Hedges 🗺","https://www.google.com/maps/search/The+Dark+Hedges+Northern+Ireland"]] },
 
       { ido:"18:00", tipus:"info", statusz:"opt", nev:"Visszaérkezés Belfastba",
@@ -545,7 +547,7 @@ const ADAT = {
     { ikon:"🛏️", nev:"Szállás Belfast — 3 éj",         ar:95.00,  kinek:"mind", statusz:"fix", fizetve:true, megj:"Windsor Park terrace · £380 ÷ 4 · foglalás visszaigazolva" },
     { ikon:"✈️", nev:"Repjegy Edinburgh → Belfast",    ar:14.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"RK 179, szept. 26. 15:40 · Ryanair UK · megvéve" },
     { ikon:"✈️", nev:"Repjegy Belfast → Edinburgh",    ar:18.99,  kinek:"mind", statusz:"fix", fizetve:true, megj:"easyJet, szept. 29. 11:55 · megvéve" },
-    { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:35.14, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · 14 930 Ft/fő · ingyen lemondható szept. 26-ig" },
+    { ikon:"🚐", nev:"Giant’s Causeway + GoT túra", ar:22.40, kinek:"mind", statusz:"todo", megj:"GetYourGuide · szept. 27. 9:30 · 8,5 óra · AKCIÓS −36% (£140 → £89.60 négyre) · ingyen lemondható szept. 26-ig" },
     { ikon:"⚽", nev:"Meccsjegy — Windsor Park",       ar:41.29,  kinek:"mind", statusz:"fix", fizetve:true, megj:"vendégszektor · 17 500 Ft/fő · nevesített jegy · megvéve" },
     { ikon:"🚌", nev:"Airlink 100 — Open Return",      ar:8.50,   kinek:"mind", statusz:"fix", fizetve:true, megj:"4× £8.50 = £34 · airlink100.co.uk · szept. 25 → 26. · megvéve" },
     { ikon:"🚌", nev:"Airlink extra single (én)",      ar:6.00,   kinek:"en",   statusz:"fix",  megj:"szept. 24. 23:15, ki eléjük · a buszon kártyával, nem kell előre megvenni" },
@@ -561,7 +563,7 @@ const ADAT = {
   // [cím, leírás, ETA/határidő]
   teendok: [
     ["🔴 UK ETA — mind a 3 BRO","KÖTELEZŐ a beutazáshoz · £20/fő · gov.uk/eta vagy a UK ETA app · percek alatt megvan","2026-08-25"],
-    ["Giant’s Causeway túra lefoglalása","szept. 27. 9:30 · most fizetni sem kell, szept. 26-ig ingyen lemondható","2026-08-30"],
+    ["🔴 Giant’s Causeway túra lefoglalása","AKCIÓS £22.40/fő (−36%, £89.60 négyre) · fizetni most sem kell, szept. 26-ig ingyen lemondható — nincs kockázat, az ár viszont elfogyhat","2026-09-24"],
     ["Túra meeting pointjának ellenőrzése","hol és hánykor gyülekezik — eszerint pontosítjuk a reggeli indulást","2026-09-20"],
     ["Pub a szept. 25-i meccsre",       "kivetítős hely Edinburgh-ben, asztalfoglalás",     "2026-09-18"],
     ["mLink app letöltése és jegy vétele","Airport Express 300 retúr · £11/fő · előre megvehető, aktiválni kell utazás előtt","2026-09-20"],
